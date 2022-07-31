@@ -38,11 +38,6 @@ public class MazeParent1 : MonoBehaviour
         {
             AssetDatabase.CreateFolder("Assets", "Meshes");
         }
-
-        if(isCombined && floorParent.GetComponent<MeshFilter>().sharedMesh == null || isCombined && wallParent.GetComponent<MeshFilter>().sharedMesh == null)
-        {
-            DestroyImmediate(gameObject);
-        }
     }
 
     public void combineMaze()
@@ -53,11 +48,13 @@ public class MazeParent1 : MonoBehaviour
             floorParent.AddComponent<MeshFilter>();
             floorParent.AddComponent<MeshRenderer>();
             floorParent.GetComponent<MeshRenderer>().material = floorMaterial;
+            floorParent.tag = ("FloorParent");
 
             wallParent = new GameObject();
             wallParent.AddComponent<MeshFilter>();
             wallParent.AddComponent<MeshRenderer>();
             wallParent.GetComponent<MeshRenderer>().material = wallMaterial;
+            wallParent.tag = ("WallParent");
 
             #region floor merge
         combineFloors();
@@ -67,6 +64,10 @@ public class MazeParent1 : MonoBehaviour
         #endregion
 
             isCombined = true;
+        }
+        else
+        {
+            EditorUtility.DisplayDialog("Error!", "Maze is already combined", "ok");
         }
     }
 
@@ -128,20 +129,32 @@ public class MazeParent1 : MonoBehaviour
             #region save floor Mesh
             string floorMeshPath = "Assets/Meshes/" + floorParent.name + ".asset";
             floorMeshPath = AssetDatabase.GenerateUniqueAssetPath(floorMeshPath);
-            AssetDatabase.CreateAsset(floorParent.GetComponent<MeshFilter>().sharedMesh, floorMeshPath);
-            var floorMesh = AssetDatabase.LoadMainAssetAtPath(floorMeshPath);
-            floorParent.GetComponent<MeshFilter>().sharedMesh = EditorUtility.InstanceIDToObject(floorMesh.GetInstanceID()) as Mesh;
+            var floorMesh = floorParent.GetComponent<MeshFilter>().sharedMesh;
+            AssetDatabase.CreateAsset(floorMesh, floorMeshPath);
             #endregion
 
             #region save wall Mesh
             string wallMeshPath = "Assets/Meshes/" + wallParent.name + ".asset";
             wallMeshPath = AssetDatabase.GenerateUniqueAssetPath(wallMeshPath);
-            AssetDatabase.CreateAsset(wallParent.GetComponent<MeshFilter>().sharedMesh, wallMeshPath);
-            var wallMesh = AssetDatabase.LoadMainAssetAtPath(wallMeshPath);
-            wallParent.GetComponent<MeshFilter>().sharedMesh = EditorUtility.InstanceIDToObject(wallMesh.GetInstanceID()) as Mesh;
+            var wallMesh = wallParent.GetComponent<MeshFilter>().sharedMesh;
+            AssetDatabase.CreateAsset(wallMesh, wallMeshPath);
             #endregion
+
+            #region save maze prefab
+            string savePath = "Assets/Mazes/" + gameObject.name + ".prefab";
+            savePath = AssetDatabase.GenerateUniqueAssetPath(savePath);
+            maze = PrefabUtility.SaveAsPrefabAsset(this.gameObject, savePath, out bool outbool);
+            maze.GetComponent<MazeParent1>().floorParent = GameObject.FindGameObjectWithTag("FloorParent");
+            maze.GetComponent<MazeParent1>().wallParent = GameObject.FindGameObjectWithTag("WallParent");
+            maze.GetComponent<MazeParent1>().floorParent.GetComponent<MeshFilter>().sharedMesh = Instantiate(floorParent.GetComponent<MeshFilter>().sharedMesh);
+            maze.GetComponent<MazeParent1>().wallParent.GetComponent<MeshFilter>().sharedMesh = Instantiate(wallParent.GetComponent<MeshFilter>().sharedMesh);
+            #endregion
+
+            isSaved = true;
+            return;
         }
-        else if (EditorUtility.DisplayDialog("Are you sure?", "You won't be able to combine the meshes after saving", "yes", "no"))
+        
+        if (!isCombined && EditorUtility.DisplayDialog("Are you sure?", "You won't be able to combine the sharedMeshes after saving", "yes", "no"))
         {     
             #region save maze prefab
             string savePath = "Assets/Mazes/" + gameObject.name + ".prefab";
@@ -150,10 +163,7 @@ public class MazeParent1 : MonoBehaviour
             #endregion
 
             isSaved = true;
-            GameObject newMaze = (GameObject)PrefabUtility.InstantiatePrefab(EditorUtility.InstanceIDToObject(maze.GetInstanceID()));
-            mazeGenerator.mazeParent = newMaze;
-            newMaze.gameObject.name = "Maze";
-            DestroyImmediate(gameObject);
+            return;
         }
     }
 

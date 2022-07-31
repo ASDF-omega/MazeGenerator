@@ -168,16 +168,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b60abc5bdc16a48a648a430569fbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRow: 9
-  currentColumn: 9
-  rows: 10
-  columns: 10
-  cellsGenerated: 100
+  currentRow: 1
+  currentColumn: 1
+  rows: 2
+  columns: 2
+  cellsGenerated: 4
   mazeGenerator: {fileID: 172566102}
   currentCell: {fileID: 0}
   isfinished: 1
   percentGenerated: 0
-  totalCells: 100
+  totalCells: 4
   camera: {fileID: 1335184888}
 --- !u!114 &172566102
 MonoBehaviour:
@@ -191,8 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d90ac887ac47704fb1f15cf8e5d8059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rows: 10
-  Columns: 10
+  Rows: 2
+  Columns: 2
   mazeParentObject: {fileID: 9031654882932638227, guid: 8f218c03dce5a0641b5edd35f26b4972, type: 3}
   mazeParent: {fileID: 0}
   algorithm: {fileID: 172566101}
@@ -276,7 +276,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335184886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: -5}
+  m_LocalPosition: {x: 1, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
