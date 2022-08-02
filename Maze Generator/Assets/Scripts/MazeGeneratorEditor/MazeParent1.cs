@@ -9,22 +9,13 @@ public class MazeParent1 : MonoBehaviour
     private GameObject maze;
     private GameObject wallParent;
     private GameObject floorParent;
-    private bool isStartMethodCalled = false;
+
     private bool isCombined = false;
-    private bool isSaved;
-    private MazeGenerator mazeGenerator;
 
     public bool isdoneGenerating = false;
 
     [SerializeField] private Material floorMaterial;
     [SerializeField] private Material wallMaterial;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        mazeGenerator = GameObject.FindGameObjectWithTag("MazeGenerator").GetComponent<MazeGenerator>();
-        isStartMethodCalled = true;
-    }
 
     // Update is called once per frame
     void Update()
@@ -150,7 +141,6 @@ public class MazeParent1 : MonoBehaviour
             maze.GetComponent<MazeParent1>().wallParent.GetComponent<MeshFilter>().sharedMesh = Instantiate(wallParent.GetComponent<MeshFilter>().sharedMesh);
             #endregion
 
-            isSaved = true;
             return;
         }
         
@@ -162,7 +152,6 @@ public class MazeParent1 : MonoBehaviour
             maze = PrefabUtility.SaveAsPrefabAsset(this.gameObject, savePath, out bool outbool);
             #endregion
 
-            isSaved = true;
             return;
         }
     }
