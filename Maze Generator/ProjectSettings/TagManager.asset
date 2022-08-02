@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Floor
   - MazeGenerator
+  - FloorParent
+  - WallParent
   layers:
   - Default
   - TransparentFX

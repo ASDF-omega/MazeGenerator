@@ -176,7 +176,7 @@ MonoBehaviour:
   mazeGenerator: {fileID: 172566102}
   currentCell: {fileID: 0}
   isfinished: 1
-  percentGenerated: 0
+  percentGenerated: 1
   totalCells: 4
   camera: {fileID: 1335184888}
 --- !u!114 &172566102

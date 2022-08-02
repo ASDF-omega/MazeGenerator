@@ -105,36 +105,6 @@ public class MazeParent : MonoBehaviour
         wallParent.transform.gameObject.SetActive(true);
     }
 
-    public void saveMaze()
-    {
-        #region save floor Mesh
-        string floorMeshPath = "Assets/Meshes/" + floorParent.name + ".asset";
-        floorMeshPath = AssetDatabase.GenerateUniqueAssetPath(floorMeshPath);
-        AssetDatabase.CreateAsset(floorParent.GetComponent<MeshFilter>().mesh, floorMeshPath);
-        var floorMesh = AssetDatabase.LoadMainAssetAtPath(floorMeshPath);
-        floorParent.GetComponent<MeshFilter>().mesh = EditorUtility.InstanceIDToObject(floorMesh.GetInstanceID()) as Mesh;
-        #endregion
-
-        #region save wall Mesh
-        string wallMeshPath = "Assets/Meshes/" + wallParent.name + ".asset";
-        wallMeshPath = AssetDatabase.GenerateUniqueAssetPath(wallMeshPath);
-        AssetDatabase.CreateAsset(wallParent.GetComponent<MeshFilter>().mesh, wallMeshPath);
-        var wallMesh = AssetDatabase.LoadMainAssetAtPath(wallMeshPath);
-        wallParent.GetComponent<MeshFilter>().mesh = EditorUtility.InstanceIDToObject(wallMesh.GetInstanceID()) as Mesh;
-        #endregion
-
-        #region save maze prefab
-        string savePath = "Assets/Mazes/" + gameObject.name + ".prefab";
-        savePath = AssetDatabase.GenerateUniqueAssetPath(savePath);
-        maze = PrefabUtility.SaveAsPrefabAsset(this.gameObject, savePath, out bool outbool);
-        #endregion
-
-        GameObject newMaze = Instantiate(maze, transform.position, Quaternion.identity);
-        newMaze.gameObject.name = "Maze";
-        Destroy(gameObject);
-        combineMaze();
-    }
-
     public static T[] GetComponentsInChildrenWithTag<T>(Transform parent, string Tag) where T : Component
     {
         GameObject[] allGameObjectsWithTag = GameObject.FindGameObjectsWithTag(Tag);

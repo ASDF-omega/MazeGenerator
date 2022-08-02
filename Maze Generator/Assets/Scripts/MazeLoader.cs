@@ -16,13 +16,6 @@ public class MazeLoader : MonoBehaviour
     [SerializeField] private GameObject floor;
     [SerializeField] private GameObject wall;
     [SerializeField] private MazeCell[,] maze;
-    [SerializeField] private float zoom;
-    [SerializeField] private Slider zoomSlider;
-    [SerializeField] private Slider heightSlider;
-    [SerializeField] private Slider widthSlider;
-    [SerializeField] private TextMeshProUGUI heightText;
-    [SerializeField] private TextMeshProUGUI widthText;
-    [SerializeField] private Camera camera;
 
     private void Awake()
     {
@@ -41,21 +34,6 @@ public class MazeLoader : MonoBehaviour
         algorithm.maze = this.maze;
         algorithm.rows = this.Rows;
         algorithm.columns = this.Columns;
-
-        zoom = zoomSlider.maxValue - zoomSlider.value;
-
-        if(zoom < zoomSlider.maxValue - (zoomSlider.maxValue - 10))
-        {
-            zoom = 10;
-        }
-
-        Rows = Mathf.RoundToInt(heightSlider.value);
-        Columns = Mathf.RoundToInt(widthSlider.value);
-
-        heightText.text = "Height: " + Rows;
-        widthText.text = "Width: " + Columns;
-
-        camera.transform.position = new Vector3(camera.transform.position.x, zoom, camera.transform.position.z);
     }
 
     public void InstantiateMaze(int rows, int columns)
