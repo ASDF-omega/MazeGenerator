@@ -19,6 +19,18 @@ public class MazeParent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        floorParent = new GameObject();
+        floorParent.transform.parent = this.transform;
+        floorParent.AddComponent<MeshRenderer>();
+        floorParent.AddComponent<MeshFilter>();
+        floorParent.GetComponent<MeshRenderer>().material = floorMaterial;
+
+        wallParent = new GameObject();
+        wallParent.transform.parent = this.transform;
+        wallParent.AddComponent<MeshRenderer>();
+        wallParent.AddComponent<MeshFilter>();
+        wallParent.GetComponent<MeshRenderer>().material = wallMaterial;
+
         isStartMethodCalled = true;
     }
 

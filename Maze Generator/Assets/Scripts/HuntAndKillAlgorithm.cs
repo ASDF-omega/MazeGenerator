@@ -13,8 +13,6 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
         currentCell = maze[currentRow, currentColumn];
         currentCell.isVisited = true;
         Kill();
-        camera.transform.position = maze[Mathf.RoundToInt(rows / 2), Mathf.RoundToInt(columns / 2)].transform.position;
-        GameObject.Destroy(GameObject.Find("New Game Object"));
     }
 
     public void Hunt()

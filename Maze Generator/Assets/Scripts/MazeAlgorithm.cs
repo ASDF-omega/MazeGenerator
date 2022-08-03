@@ -15,7 +15,6 @@ public abstract class MazeAlgorithm : MonoBehaviour
     protected CombineInstance[] combineInstances;
 
     [SerializeField] protected MazeLoader mazeLoader;
-    [SerializeField] protected Camera camera;
 
     public abstract void CreateMaze();
 }

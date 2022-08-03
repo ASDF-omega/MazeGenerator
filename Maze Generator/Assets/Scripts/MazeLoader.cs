@@ -25,7 +25,7 @@ public class MazeLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        algorithm.CreateMaze();
     }
 
     // Update is called once per frame
@@ -119,5 +119,9 @@ public class MazeLoader : MonoBehaviour
                 }
             }
         }
+
+        algorithm.maze = this.maze;
+        algorithm.rows = this.Rows;
+        algorithm.columns = this.Columns;
     }
 }
