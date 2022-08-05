@@ -20,6 +20,9 @@ public class MazeLoader : MonoBehaviour
     private void Awake()
     {
         maze = new MazeCell[Rows, Columns];
+        algorithm.maze = this.maze;
+        algorithm.rows = this.Rows;
+        algorithm.columns = this.Columns;
     }
 
     // Start is called before the first frame update
@@ -119,9 +122,6 @@ public class MazeLoader : MonoBehaviour
                 }
             }
         }
-
-        algorithm.maze = this.maze;
-        algorithm.rows = this.Rows;
-        algorithm.columns = this.Columns;
     }
 }
+

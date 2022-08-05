@@ -37,16 +37,6 @@ public class MazeParent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!AssetDatabase.IsValidFolder("Assets/Mazes"))
-        {
-            AssetDatabase.CreateFolder("Assets", "Mazes");
-        }
-
-        if (!AssetDatabase.IsValidFolder("Assets/Meshes"))
-        {
-            AssetDatabase.CreateFolder("Assets", "Meshes");
-        }
-
         if(isdoneGenerating && isStartMethodCalled && !isCombined)
         {
             combineMaze();

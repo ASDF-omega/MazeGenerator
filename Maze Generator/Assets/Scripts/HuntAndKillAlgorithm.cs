@@ -28,7 +28,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                 currentRow = i;
                 currentColumn = j;
 
-                if(hasAdjacentUnvisitedCells())
+                if (hasAdjacentUnvisitedCells())
                 {
                     isfinished = false;
                     Kill();
@@ -37,7 +37,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
             }
         }
 
-        if(isfinished)
+        if (isfinished)
         {
             mazeLoader.mazeParent.GetComponent<MazeParent>().isdoneGenerating = true;
             return;
@@ -46,13 +46,13 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
 
     public void Kill()
     {
-        while(hasAdjacentUnvisitedCells())
+        while (hasAdjacentUnvisitedCells())
         {
             int direction = Random.Range(0, 4);
 
             if (direction == 0)
             {
-                if(currentRow > 0 && !currentCell.northcell.isVisited)
+                if (currentRow > 0 && !currentCell.northcell.isVisited)
                 {
                     Destroy(currentCell.northwall);
                     --currentRow;
@@ -63,7 +63,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
 
             if (direction == 1)
             {
-                if(currentColumn < columns - 1 && !currentCell.eastcell.isVisited)
+                if (currentColumn < columns - 1 && !currentCell.eastcell.isVisited)
                 {
                     Destroy(currentCell.eastwall);
                     ++currentColumn;
@@ -74,7 +74,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
 
             if (direction == 2)
             {
-                if(currentRow < rows - 1 && !currentCell.southcell.isVisited)
+                if (currentRow < rows - 1 && !currentCell.southcell.isVisited)
                 {
                     Destroy(currentCell.southwall);
                     ++currentRow;
@@ -85,7 +85,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
 
             if (direction == 3)
             {
-                if(currentColumn > 0 && !currentCell.westcell.isVisited)
+                if (currentColumn > 0 && !currentCell.westcell.isVisited)
                 {
                     Destroy(currentCell.westwall);
                     --currentColumn;
@@ -100,21 +100,21 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
 
     public bool hasAdjacentUnvisitedCells()
     {
-        if(currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false)
+        if (currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false)
         {
             return true;
         }
 
-        if(currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false)
+        if (currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false)
         {
             return true;
         }
 
-        if(currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false)
+        if (currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false)
         {
             return true;
         }
-        
+
         if (currentColumn > 0 && maze[currentRow, currentColumn - 1].isVisited == false)
         {
             return true;
