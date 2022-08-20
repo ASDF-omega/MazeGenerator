@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class MazeLoader : MonoBehaviour
 {
@@ -76,6 +74,9 @@ public class MazeLoader : MonoBehaviour
                     maze[i, j].eastwall = EastEdgeWall;
                     EastEdgeWall.transform.parent = mazeParent.transform;
                 }
+
+                maze[i, j].RowIndex = i;
+                maze[i, j].ColumnIndex = j;
             }
         }
 

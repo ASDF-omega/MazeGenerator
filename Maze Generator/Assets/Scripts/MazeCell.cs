@@ -13,5 +13,8 @@ public class MazeCell : MonoBehaviour
     public MazeCell southcell;
     public MazeCell westcell;
     public MazeCell nextcell;
+    public MazeCell previouscell;
+    public int RowIndex;
+    public int ColumnIndex;
     public bool isVisited = false;
 }

@@ -10,12 +10,24 @@ public class MazeParent1 : MonoBehaviour
     private GameObject wallParent;
     private GameObject floorParent;
 
+    private delegate void CombineAsTwoMesh();
+    private CombineAsTwoMesh combineAsTwoMesh;
+
     private bool isCombined = false;
 
     public bool isdoneGenerating = false;
 
     [SerializeField] private Material floorMaterial;
     [SerializeField] private Material wallMaterial;
+
+    private MazeGenerator mazeGenerator;
+
+    private void Awake()
+    {
+        mazeGenerator = GameObject.FindGameObjectWithTag("MazeGenerator").GetComponent<MazeGenerator>();
+        combineAsTwoMesh += combineFloors;
+        combineAsTwoMesh += combineWalls;
+    }
 
     // Update is called once per frame
     void Update()
@@ -35,24 +47,26 @@ public class MazeParent1 : MonoBehaviour
     {
         if(!isCombined)
         {
-            floorParent = new GameObject();
-            floorParent.AddComponent<MeshFilter>();
-            floorParent.AddComponent<MeshRenderer>();
-            floorParent.GetComponent<MeshRenderer>().material = floorMaterial;
-            floorParent.tag = ("FloorParent");
+            if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_Floors_And_Walls)
+            {
+                floorParent = new GameObject();
+                floorParent.AddComponent<MeshFilter>();
+                floorParent.AddComponent<MeshRenderer>();
+                floorParent.GetComponent<MeshRenderer>().material = floorMaterial;
+                floorParent.tag = ("FloorParent");
 
-            wallParent = new GameObject();
-            wallParent.AddComponent<MeshFilter>();
-            wallParent.AddComponent<MeshRenderer>();
-            wallParent.GetComponent<MeshRenderer>().material = wallMaterial;
-            wallParent.tag = ("WallParent");
+                wallParent = new GameObject();
+                wallParent.AddComponent<MeshFilter>();
+                wallParent.AddComponent<MeshRenderer>();
+                wallParent.GetComponent<MeshRenderer>().material = wallMaterial;
+                wallParent.tag = ("WallParent");
 
-            #region floor merge
-        combineFloors();
-        #endregion
-            #region wall merge
-        combineWalls();
-        #endregion
+                combineAsTwoMesh();
+            }
+            else if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_One_Mesh)
+            {
+
+            }
 
             isCombined = true;
         }
@@ -76,9 +90,16 @@ public class MazeParent1 : MonoBehaviour
         {
             floorCombineInstance[i].mesh = floorMeshFilters[i].sharedMesh;
             floorCombineInstance[i].transform = floorMeshFilters[i].transform.localToWorldMatrix;
-            DestroyImmediate(floorMeshFilters[i].gameObject);
-      /*      floorMeshFilters[i].gameObject.SetActive(false);
-            floorMeshFilters[i].transform.parent = floorParent.transform; */
+
+            if(mazeGenerator.__ == MazeGenerator._.Destroy_Combined_Meshes)
+            {
+                DestroyImmediate(floorMeshFilters[i].gameObject);
+            }
+            else if(mazeGenerator.__ == MazeGenerator._.Disable_Combined_Meshes)
+            {
+                floorMeshFilters[i].gameObject.SetActive(false);
+                floorMeshFilters[i].transform.parent = floorParent.transform;
+            }
             i++;
         }
 
@@ -101,9 +122,17 @@ public class MazeParent1 : MonoBehaviour
         {
             wallCombineInstance[j].mesh = wallMeshFilters[j].sharedMesh;
             wallCombineInstance[j].transform = wallMeshFilters[j].transform.localToWorldMatrix;
-            DestroyImmediate(wallMeshFilters[j].gameObject);
-    /*        wallMeshFilters[j].gameObject.SetActive(false);
-            wallMeshFilters[j].transform.parent = wallParent.transform; */
+
+            if (mazeGenerator.__ == MazeGenerator._.Destroy_Combined_Meshes)
+            {
+                DestroyImmediate(wallMeshFilters[j].gameObject);
+            }
+            else if (mazeGenerator.__ == MazeGenerator._.Disable_Combined_Meshes)
+            {
+                wallMeshFilters[j].gameObject.SetActive(false);
+                wallMeshFilters[j].transform.parent = wallParent.transform;
+            }
+
             j++;
         }
 
@@ -156,6 +185,7 @@ public class MazeParent1 : MonoBehaviour
         }
     }
 
+    #region finding things with tag methods
     public static T[] GetComponentsInChildrenWithTag<T>(Transform parent, string Tag) where T : Component
     {
         GameObject[] allGameObjectsWithTag = GameObject.FindGameObjectsWithTag(Tag);
@@ -187,4 +217,5 @@ public class MazeParent1 : MonoBehaviour
 
         return childrenWithTag.ToArray();
     }
+    #endregion
 }

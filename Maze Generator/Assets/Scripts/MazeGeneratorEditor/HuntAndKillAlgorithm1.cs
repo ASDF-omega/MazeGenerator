@@ -7,19 +7,15 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
 {
     public override void CreateMaze()
     {
-        totalCells = rows * columns;
-        cellsGenerated = 1;
         isfinished = false;
         DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
         mazeGenerator.InstantiateMaze(rows, columns);
-        currentRow = 0;
-        currentColumn = 0;
-        percentGenerated = 0;
+        currentRow = Random.Range(0, rows);
+        currentColumn = Random.Range(0, columns);
         currentCell = maze[currentRow, currentColumn];
+        initialCell = currentCell;
         currentCell.isVisited = true;
-        EditorUtility.DisplayProgressBar("Generating Maze", (percentGenerated * 100 + "% Completed").ToString(), percentGenerated);
         Kill();
-        camera.transform.position = maze[Mathf.RoundToInt(rows / 2), Mathf.RoundToInt(columns / 2)].transform.position;
     }
 
     public void Hunt()
@@ -47,15 +43,12 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
         if(isfinished)
         {
             mazeGenerator.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
-            startedGenerating = false;
-            EditorUtility.ClearProgressBar();
             return;
         }
     }
 
     public void Kill()
     {
-        startedGenerating = true;
         while (hasAdjacentUnvisitedCells())
         {
             int direction = Random.Range(0, 4);
@@ -67,8 +60,9 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
                     DestroyImmediate(currentCell.northwall);
                     --currentRow;
                     currentCell.northcell.isVisited = true;
+                    currentCell.nextcell = currentCell.northcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.northcell;
-                    ++cellsGenerated;
                 }
             }
 
@@ -79,8 +73,9 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
                     DestroyImmediate(currentCell.eastwall);
                     ++currentColumn;
                     currentCell.eastcell.isVisited = true;
+                    currentCell.nextcell = currentCell.eastcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.eastcell;
-                    ++cellsGenerated;
                 }
             }
 
@@ -91,8 +86,9 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
                     DestroyImmediate(currentCell.southwall);
                     ++currentRow;
                     currentCell.southcell.isVisited = true;
+                    currentCell.nextcell = currentCell.southcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.southcell;
-                    ++cellsGenerated;
                 }
             }
 
@@ -103,46 +99,12 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
                     DestroyImmediate(currentCell.westwall);
                     --currentColumn;
                     currentCell.westcell.isVisited = true;
+                    currentCell.nextcell = currentCell.westcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.westcell;
-                    ++cellsGenerated;
                 }
             }
-
-            currentCellsGenerated = cellsGenerated;
-
-            for (int i = 0; i < currentCellsGenerated-initialCellsGenerated; i++)
-            {
-                percentGenerated = cellsGenerated / totalCells;
-                EditorUtility.DisplayProgressBar("Generating Maze", (percentGenerated * 100 + "% Completed").ToString(), percentGenerated);
-                initialCellsGenerated = currentCellsGenerated;
-            }
         }
-
         Hunt();
-    }
-
-    public bool hasAdjacentUnvisitedCells()
-    {
-        if(currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false)
-        {
-            return true;
-        }
-
-        if(currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false)
-        {
-            return true;
-        }
-
-        if(currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false)
-        {
-            return true;
-        }
-        
-        if (currentColumn > 0 && maze[currentRow, currentColumn - 1].isVisited == false)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

@@ -9,20 +9,39 @@ public abstract class MazeAlgorithm1 : MonoBehaviour
     public int currentColumn = 0;
     public int rows;
     public int columns;
-    public int cellsGenerated = 1;
-    public MazeGenerator mazeGenerator;
     public MazeCell currentCell;
     public bool isfinished;
-    public int percentGenerated;
 
-    protected int initialCellsGenerated;
-    protected int currentCellsGenerated;
-    protected CombineInstance[] combineInstances;
-    protected bool startedGenerating;
+    protected MazeCell previousCell;
+    protected MazeCell initialCell;
+    protected bool isEditor = false;
 
-    [SerializeField] protected int totalCells;
-
-    [SerializeField] protected Camera camera;
+    [SerializeField] protected MazeGenerator mazeGenerator;
 
     public abstract void CreateMaze();
+
+    protected bool hasAdjacentUnvisitedCells()
+    {
+        if (currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false)
+        {
+            return true;
+        }
+
+        if (currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false)
+        {
+            return true;
+        }
+
+        if (currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false)
+        {
+            return true;
+        }
+
+        if (currentColumn > 0 && maze[currentRow, currentColumn - 1].isVisited == false)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

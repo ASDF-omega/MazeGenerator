@@ -6,11 +6,13 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
 {
     public override void CreateMaze()
     {
+        isfinished = false;
         Destroy(GameObject.FindGameObjectWithTag("Maze"));
         mazeLoader.InstantiateMaze(rows, columns);
-        currentRow = 0;
-        currentColumn = 0;
+        currentRow = Random.Range(0, rows);
+        currentColumn = Random.Range(0, columns);
         currentCell = maze[currentRow, currentColumn];
+        initialCell = currentCell;
         currentCell.isVisited = true;
         Kill();
     }
@@ -57,6 +59,8 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     Destroy(currentCell.northwall);
                     --currentRow;
                     currentCell.northcell.isVisited = true;
+                    currentCell.nextcell = currentCell.northcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.northcell;
                 }
             }
@@ -68,6 +72,8 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     Destroy(currentCell.eastwall);
                     ++currentColumn;
                     currentCell.eastcell.isVisited = true;
+                    currentCell.nextcell = currentCell.eastcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.eastcell;
                 }
             }
@@ -79,6 +85,8 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     Destroy(currentCell.southwall);
                     ++currentRow;
                     currentCell.southcell.isVisited = true;
+                    currentCell.nextcell = currentCell.southcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.southcell;
                 }
             }
@@ -90,36 +98,13 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     Destroy(currentCell.westwall);
                     --currentColumn;
                     currentCell.westcell.isVisited = true;
+                    currentCell.nextcell = currentCell.westcell;
+                    currentCell.nextcell.previouscell = currentCell;
                     currentCell = currentCell.westcell;
                 }
             }
         }
 
         Hunt();
-    }
-
-    public bool hasAdjacentUnvisitedCells()
-    {
-        if (currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false)
-        {
-            return true;
-        }
-
-        if (currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false)
-        {
-            return true;
-        }
-
-        if (currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false)
-        {
-            return true;
-        }
-
-        if (currentColumn > 0 && maze[currentRow, currentColumn - 1].isVisited == false)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

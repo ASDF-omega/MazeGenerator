@@ -17,6 +17,12 @@ public class EditorMazeGenerator : Editor
         mazeGenerator.algorithm.rows = mazeGenerator.Rows;
         mazeGenerator.algorithm.columns = mazeGenerator.Columns;
 
+
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Buttons", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+
         if (GUILayout.Button("Generate New Maze"))
         {
             mazeGenerator.algorithm.CreateMaze();

@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEditor;
-using TMPro;
 
 public class MazeGenerator : MonoBehaviour
 {
+    [Header("Settings")]
+    [Space]
     [Range(2, 100)]
-    public int Rows, Columns;
-
+    public int Rows;
+    [Range(2, 100)]
+    public int Columns;
+    [Space]
+    [Header("References")]
+    [Space]
     public GameObject mazeParentObject;
     public GameObject mazeParent;
     public MazeAlgorithm1 algorithm;
@@ -20,6 +24,14 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private GameObject floor;
     [SerializeField] private GameObject wall;
 
+    [Header("Options")]
+    public CombineOptions combineOptions;
+    public _ __;
+    public MazeAlgorithms Algorithm;
+
+    public enum CombineOptions { combine_Into_One_Mesh, combine_Into_Floors_And_Walls };
+    public enum _ { Destroy_Combined_Meshes, Disable_Combined_Meshes };
+    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm, GrowingTreeAlgorithm };
     public void InstantiateMaze(int rows, int columns)
     {
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -57,6 +69,9 @@ public class MazeGenerator : MonoBehaviour
                     maze[i, j].eastwall = EastEdgeWall;
                     EastEdgeWall.transform.parent = mazeParent.transform;
                 }
+
+                maze[i, j].RowIndex = i;
+                maze[i, j].ColumnIndex = j;
             }
         }
 
