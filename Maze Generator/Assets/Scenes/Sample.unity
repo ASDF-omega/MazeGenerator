@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1219462688}
   - component: {fileID: 1219462690}
-  - component: {fileID: 1219462689}
+  - component: {fileID: 1219462691}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -240,25 +240,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1219462689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1219462687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ae91b24839eb845a102af70fdb9070, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentRow: 0
-  currentColumn: 0
-  rows: 0
-  columns: 0
-  currentCell: {fileID: 0}
-  mazeLoader: {fileID: 1219462690}
-  camera: {fileID: 955463957}
 --- !u!114 &1219462690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,9 +256,28 @@ MonoBehaviour:
   Columns: 20
   mazeParentObject: {fileID: 9031654882932638227, guid: 178951de55d1db24e9c6c8769ccc6709, type: 3}
   mazeParent: {fileID: 0}
-  algorithm: {fileID: 1219462689}
+  algorithm: {fileID: 1219462691}
   floor: {fileID: 568780478056876322, guid: 9bd0302bb9732064388478017e579d66, type: 3}
   wall: {fileID: 7174750786059030701, guid: 67c0a8fac23ccff4495456fa16bc7624, type: 3}
+--- !u!114 &1219462691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219462687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea990a7cd17e394fabd4e6e1dca0d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRow: 0
+  currentColumn: 0
+  rows: 0
+  columns: 0
+  currentCell: {fileID: 0}
+  isfinished: 0
+  mazeLoader: {fileID: 1219462690}
 --- !u!1 &1275505481
 GameObject:
   m_ObjectHideFlags: 0

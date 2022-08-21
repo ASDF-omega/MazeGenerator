@@ -1,54 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class HuntAndKillAlgorithm1 : MazeAlgorithm1
+public class RecursiveBacktracking : MazeAlgorithm
 {
     public override void CreateMaze()
     {
         isfinished = false;
-        DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
-        mazeGenerator.InstantiateMaze(rows, columns);
+        Destroy(GameObject.FindGameObjectWithTag("Maze"));
+        mazeLoader.InstantiateMaze(rows, columns);
         currentRow = Random.Range(0, rows);
         currentColumn = Random.Range(0, columns);
         currentCell = maze[currentRow, currentColumn];
         initialCell = currentCell;
         currentCell.isVisited = true;
-        Kill();
+        visit();
     }
 
-    public void Hunt()
-    {
-        isfinished = true;
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                currentCell = maze[i, j];
-                currentCell.isVisited = true;
-                currentRow = i;
-                currentColumn = j;
-
-                if(hasAdjacentUnvisitedCells())
-                {
-                    isfinished = false;
-                    Kill();
-                    return;
-                }
-            }
-        }
-
-        if(isfinished)
-        {
-            mazeGenerator.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
-            Debug.Log("<color=lime><B>Successfully generated a maze with \"HuntAndKillAlgorithm\"</B></color>");
-            return;
-        }
-    }
-
-    public void Kill()
+    private void visit()
     {
         while (hasAdjacentUnvisitedCells())
         {
@@ -58,7 +27,7 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
             {
                 if (currentRow > 0 && !currentCell.northcell.isVisited)
                 {
-                    DestroyImmediate(currentCell.northwall);
+                    Destroy(currentCell.northwall);
                     --currentRow;
                     currentCell.northcell.isVisited = true;
                     currentCell.nextcell = currentCell.northcell;
@@ -71,7 +40,7 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
             {
                 if (currentColumn < columns - 1 && !currentCell.eastcell.isVisited)
                 {
-                    DestroyImmediate(currentCell.eastwall);
+                    Destroy(currentCell.eastwall);
                     ++currentColumn;
                     currentCell.eastcell.isVisited = true;
                     currentCell.nextcell = currentCell.eastcell;
@@ -84,7 +53,7 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
             {
                 if (currentRow < rows - 1 && !currentCell.southcell.isVisited)
                 {
-                    DestroyImmediate(currentCell.southwall);
+                    Destroy(currentCell.southwall);
                     ++currentRow;
                     currentCell.southcell.isVisited = true;
                     currentCell.nextcell = currentCell.southcell;
@@ -97,7 +66,7 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
             {
                 if (currentColumn > 0 && !currentCell.westcell.isVisited)
                 {
-                    DestroyImmediate(currentCell.westwall);
+                    Destroy(currentCell.westwall);
                     --currentColumn;
                     currentCell.westcell.isVisited = true;
                     currentCell.nextcell = currentCell.westcell;
@@ -106,6 +75,27 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
                 }
             }
         }
-        Hunt();
+
+        backtrack();
+    }
+
+    private void backtrack()
+    {
+        while (!hasAdjacentUnvisitedCells())
+        {
+            currentCell = currentCell.previouscell;
+
+            if (currentCell == initialCell)
+            {
+                isfinished = true;
+                mazeLoader.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
+                return;
+            }
+
+            currentRow = currentCell.RowIndex;
+            currentColumn = currentCell.ColumnIndex;
+        }
+
+        visit();
     }
 }

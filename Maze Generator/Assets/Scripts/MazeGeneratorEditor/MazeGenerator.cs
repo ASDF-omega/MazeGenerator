@@ -15,8 +15,11 @@ public class MazeGenerator : MonoBehaviour
     [Space]
     [Header("References")]
     [Space]
-    public GameObject mazeParentObject;
+    [SerializeField]
+    private GameObject mazeParentObject;
+    [HideInInspector]
     public GameObject mazeParent;
+    [HideInInspector]
     public MazeAlgorithm1 algorithm;
     public MazeCell[,] maze;
     public Camera camera;
@@ -31,7 +34,7 @@ public class MazeGenerator : MonoBehaviour
 
     public enum CombineOptions { combine_Into_One_Mesh, combine_Into_Floors_And_Walls };
     public enum _ { Destroy_Combined_Meshes, Disable_Combined_Meshes };
-    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm, GrowingTreeAlgorithm };
+    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking};
     public void InstantiateMaze(int rows, int columns)
     {
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);

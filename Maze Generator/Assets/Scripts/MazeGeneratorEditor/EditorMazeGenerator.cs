@@ -23,6 +23,16 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.LabelField("Buttons", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
+        switch(mazeGenerator.Algorithm)
+        {
+            case MazeGenerator.MazeAlgorithms.HuntAndKillAlgorithm:
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<HuntAndKillAlgorithm1>();
+                break;
+            case MazeGenerator.MazeAlgorithms.RecursiveBackTracking:
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking1>();
+                break;
+        }
+
         if (GUILayout.Button("Generate New Maze"))
         {
             mazeGenerator.algorithm.CreateMaze();
