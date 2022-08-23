@@ -31,6 +31,9 @@ public class EditorMazeGenerator : Editor
             case MazeGenerator.MazeAlgorithms.RecursiveBackTracking:
                 mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking1>();
                 break;
+            case MazeGenerator.MazeAlgorithms.PrimsAlgorithm:
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithm>();
+                break;
         }
 
         if (GUILayout.Button("Generate New Maze"))
