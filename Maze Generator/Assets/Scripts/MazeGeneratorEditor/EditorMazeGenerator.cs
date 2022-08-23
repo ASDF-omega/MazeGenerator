@@ -32,7 +32,7 @@ public class EditorMazeGenerator : Editor
                 mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking1>();
                 break;
             case MazeGenerator.MazeAlgorithms.PrimsAlgorithm:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithm>();
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithm1>();
                 break;
         }
 

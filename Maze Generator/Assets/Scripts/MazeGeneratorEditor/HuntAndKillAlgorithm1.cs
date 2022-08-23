@@ -7,14 +7,7 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
 {
     public override void CreateMaze()
     {
-        isfinished = false;
-        DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
-        mazeGenerator.InstantiateMaze(rows, columns);
-        currentRow = Random.Range(0, rows);
-        currentColumn = Random.Range(0, columns);
-        currentCell = maze[currentRow, currentColumn];
-        initialCell = currentCell;
-        currentCell.isVisited = true;
+        base.CreateMaze();
         Kill();
     }
 

@@ -17,7 +17,17 @@ public abstract class MazeAlgorithm1 : MonoBehaviour
 
     [SerializeField] protected MazeGenerator mazeGenerator;
 
-    public abstract void CreateMaze();
+    public virtual void CreateMaze()
+    {
+        isfinished = false;
+        DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
+        mazeGenerator.InstantiateMaze(rows, columns);
+        currentRow = Random.Range(0, rows);
+        currentColumn = Random.Range(0, columns);
+        currentCell = maze[currentRow, currentColumn];
+        initialCell = currentCell;
+        currentCell.isVisited = true;
+    }
 
     protected bool hasAdjacentUnvisitedCells()
     {

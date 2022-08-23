@@ -6,14 +6,7 @@ public class RecursiveBacktracking : MazeAlgorithm
 {
     public override void CreateMaze()
     {
-        isfinished = false;
-        Destroy(GameObject.FindGameObjectWithTag("Maze"));
-        mazeLoader.InstantiateMaze(rows, columns);
-        currentRow = Random.Range(0, rows);
-        currentColumn = Random.Range(0, columns);
-        currentCell = maze[currentRow, currentColumn];
-        initialCell = currentCell;
-        currentCell.isVisited = true;
+        base.CreateMaze();
         Generation();
     }
 

@@ -218,6 +218,8 @@ GameObject:
   - component: {fileID: 1219462688}
   - component: {fileID: 1219462690}
   - component: {fileID: 1219462691}
+  - component: {fileID: 1219462693}
+  - component: {fileID: 1219462692}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -256,7 +258,7 @@ MonoBehaviour:
   Columns: 20
   mazeParentObject: {fileID: 9031654882932638227, guid: 178951de55d1db24e9c6c8769ccc6709, type: 3}
   mazeParent: {fileID: 0}
-  algorithm: {fileID: 1219462691}
+  algorithm: {fileID: 1219462692}
   floor: {fileID: 568780478056876322, guid: 9bd0302bb9732064388478017e579d66, type: 3}
   wall: {fileID: 7174750786059030701, guid: 67c0a8fac23ccff4495456fa16bc7624, type: 3}
 --- !u!114 &1219462691
@@ -269,6 +271,44 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bea990a7cd17e394fabd4e6e1dca0d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRow: 0
+  currentColumn: 0
+  rows: 0
+  columns: 0
+  currentCell: {fileID: 0}
+  isfinished: 0
+  mazeLoader: {fileID: 1219462690}
+--- !u!114 &1219462692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219462687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e789ad79b2085e4eb2984ad572bab49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRow: 0
+  currentColumn: 0
+  rows: 0
+  columns: 0
+  currentCell: {fileID: 0}
+  isfinished: 0
+  mazeLoader: {fileID: 1219462690}
+--- !u!114 &1219462693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219462687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ae91b24839eb845a102af70fdb9070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentRow: 0
