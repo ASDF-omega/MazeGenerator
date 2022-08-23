@@ -30,6 +30,7 @@ public class PrimsAlgorithm : MazeAlgorithm1
 
         isfinished = true;
         mazeGenerator.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
+        Debug.Log("<color=lime><B>Successfully generated a maze with \"Prim's Algorithm\"</B></color>");
     }
 
     private void Carve()
