@@ -28,10 +28,12 @@ public class MazeGenerator : MonoBehaviour
     public CombineOptions combineOptions;
     public _ __;
     public MazeAlgorithms Algorithm;
+    public Routes Route;
 
     public enum CombineOptions { combine_Into_One_Mesh, combine_Into_Floors_And_Walls };
     public enum _ { Destroy_Combined_Meshes, Disable_Combined_Meshes };
-    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm};
+    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm, Unicursal};
+    public enum Routes { Braid, PartialBraid, Perfect, Sparse };
     public void InstantiateMaze(int rows, int columns)
     {
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
