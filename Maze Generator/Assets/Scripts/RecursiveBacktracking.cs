@@ -16,7 +16,6 @@ public class RecursiveBacktracking : MazeAlgorithm
         {
             visit();
         }
-
         backtrack();
     }
 

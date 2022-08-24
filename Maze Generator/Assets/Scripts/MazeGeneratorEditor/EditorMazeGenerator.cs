@@ -39,6 +39,18 @@ public class EditorMazeGenerator : Editor
         if (GUILayout.Button("Generate New Maze"))
         {
             mazeGenerator.algorithm.CreateMaze();
+
+            switch(mazeGenerator.Route)
+            {
+                case MazeGenerator.Routes.Braid:
+                    break;
+                case MazeGenerator.Routes.PartialBraid:
+                    break;
+                case MazeGenerator.Routes.Perfect:
+                    break;
+                case MazeGenerator.Routes.Sparse:
+                    break;
+            }
         }
 
         if(GUILayout.Button("Combine Maze"))
