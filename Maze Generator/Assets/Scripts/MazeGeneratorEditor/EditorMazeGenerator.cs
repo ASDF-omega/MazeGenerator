@@ -8,9 +8,26 @@ public class EditorMazeGenerator : Editor
 {
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
-
         MazeGenerator mazeGenerator = target as MazeGenerator;
+
+        EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+        mazeGenerator.Rows = EditorGUILayout.IntSlider("Rows", mazeGenerator.Rows, 2, 100);
+        mazeGenerator.Columns = EditorGUILayout.IntSlider("Columns", mazeGenerator.Columns, 2, 100);
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("References", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+        mazeGenerator.mazeParentObject = (GameObject)EditorGUILayout.ObjectField("Maze Parent Object", mazeGenerator.mazeParentObject, typeof(GameObject), false);
+        mazeGenerator.floor = (GameObject)EditorGUILayout.ObjectField("Floor", mazeGenerator.floor, typeof(GameObject), false);
+        mazeGenerator.wall = (GameObject)EditorGUILayout.ObjectField("Wall", mazeGenerator.wall, typeof(GameObject), false);
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Options", EditorStyles.boldLabel);
+        mazeGenerator.combineOptions = (MazeGenerator.CombineOptions)EditorGUILayout.EnumPopup("Combine Options", mazeGenerator.combineOptions);
+        mazeGenerator.__ = (MazeGenerator._)EditorGUILayout.EnumPopup(" ", mazeGenerator.__);
+        mazeGenerator.Algorithm = (MazeGenerator.MazeAlgorithms)EditorGUILayout.EnumPopup("Algorithm", mazeGenerator.Algorithm);
+        mazeGenerator.Route = (MazeGenerator.Routes)EditorGUILayout.EnumPopup("Route", mazeGenerator.Route);
 
         mazeGenerator.maze = new MazeCell[mazeGenerator.Rows, mazeGenerator.Columns];
         mazeGenerator.algorithm.maze = mazeGenerator.maze;

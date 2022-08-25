@@ -6,23 +6,14 @@ using UnityEditor;
 
 public class MazeGenerator : MonoBehaviour
 {
-    [Header("Settings")]
-    [Space]
-    [Range(2, 100)] public int Rows;
-    [Range(2, 100)] public int Columns;
-    [Space]
-    [Header("References")]
-    [Space]
-    [SerializeField]
-    private GameObject mazeParentObject;
-    [HideInInspector]
+    public int Rows;
+    public int Columns;
+    public GameObject mazeParentObject;
     public GameObject mazeParent;
-    [HideInInspector]
     public MazeAlgorithm1 algorithm;
     public MazeCell[,] maze;
-
-    [SerializeField] private GameObject floor;
-    [SerializeField] private GameObject wall;
+    public GameObject floor;
+    public GameObject wall;
 
     [Header("Options")]
     public CombineOptions combineOptions;
@@ -32,7 +23,7 @@ public class MazeGenerator : MonoBehaviour
 
     public enum CombineOptions { combine_Into_One_Mesh, combine_Into_Floors_And_Walls };
     public enum _ { Destroy_Combined_Meshes, Disable_Combined_Meshes };
-    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm, Unicursal};
+    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal};
     public enum Routes { Braid, PartialBraid, Perfect, Sparse };
     public void InstantiateMaze(int rows, int columns)
     {

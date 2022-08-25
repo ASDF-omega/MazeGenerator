@@ -5,13 +5,13 @@ using UnityEngine;
 public abstract class MazeAlgorithm1 : MonoBehaviour
 {
     public MazeCell[,] maze;
-    public int currentRow = 0;
-    public int currentColumn = 0;
     public int rows;
     public int columns;
-    public MazeCell currentCell;
     public bool isfinished;
 
+    protected int currentRow = 0;
+    protected int currentColumn = 0;
+    protected MazeCell currentCell;
     protected MazeCell initialCell;
     protected bool isEditor = false;
 
