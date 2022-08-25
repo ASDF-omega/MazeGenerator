@@ -10,6 +10,7 @@ public class EditorMazeGenerator : Editor
     {
         MazeGenerator mazeGenerator = target as MazeGenerator;
 
+        #region inspector display
         EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
         EditorGUILayout.Space();
         mazeGenerator.Rows = EditorGUILayout.IntSlider("Rows", mazeGenerator.Rows, 2, 100);
@@ -28,30 +29,10 @@ public class EditorMazeGenerator : Editor
         mazeGenerator.__ = (MazeGenerator._)EditorGUILayout.EnumPopup(" ", mazeGenerator.__);
         mazeGenerator.Algorithm = (MazeGenerator.MazeAlgorithms)EditorGUILayout.EnumPopup("Algorithm", mazeGenerator.Algorithm);
         mazeGenerator.Route = (MazeGenerator.Routes)EditorGUILayout.EnumPopup("Route", mazeGenerator.Route);
-
-        mazeGenerator.maze = new MazeCell[mazeGenerator.Rows, mazeGenerator.Columns];
-        mazeGenerator.algorithm.maze = mazeGenerator.maze;
-        mazeGenerator.algorithm.rows = mazeGenerator.Rows;
-        mazeGenerator.algorithm.columns = mazeGenerator.Columns;
-
-
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Buttons", EditorStyles.boldLabel);
         EditorGUILayout.Space();
-
-        switch(mazeGenerator.Algorithm)
-        {
-            case MazeGenerator.MazeAlgorithms.HuntAndKillAlgorithm:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<HuntAndKillAlgorithm1>();
-                break;
-            case MazeGenerator.MazeAlgorithms.RecursiveBackTracking:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking1>();
-                break;
-            case MazeGenerator.MazeAlgorithms.PrimsAlgorithm:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithm1>();
-                break;
-        }
 
         if (GUILayout.Button("Generate New Maze"))
         {
@@ -92,6 +73,25 @@ public class EditorMazeGenerator : Editor
             {
                 EditorUtility.DisplayDialog("Error!", "A maze must be generated before it can be saved!", "ok");
             }
+        }
+        #endregion
+
+        mazeGenerator.maze = new MazeCell[mazeGenerator.Rows, mazeGenerator.Columns];
+        mazeGenerator.algorithm.maze = mazeGenerator.maze;
+        mazeGenerator.algorithm.rows = mazeGenerator.Rows;
+        mazeGenerator.algorithm.columns = mazeGenerator.Columns;
+
+        switch(mazeGenerator.Algorithm)
+        {
+            case MazeGenerator.MazeAlgorithms.HuntAndKillAlgorithm:
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<HuntAndKillAlgorithm1>();
+                break;
+            case MazeGenerator.MazeAlgorithms.RecursiveBackTracking:
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking1>();
+                break;
+            case MazeGenerator.MazeAlgorithms.PrimsAlgorithm:
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithm1>();
+                break;
         }
     }
 }
