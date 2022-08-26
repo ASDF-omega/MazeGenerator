@@ -16,5 +16,35 @@ public class MazeCell : MonoBehaviour
     public MazeCell previouscell;
     public int RowIndex;
     public int ColumnIndex;
+    public int Rows;
+    public int Columns;
+    public int links;
     public bool isVisited = false;
+
+    public GameObject[] AvailableWalls()
+    {
+        List<GameObject> availableWalls = new List<GameObject>();
+
+        if (RowIndex > 0)
+        {
+            availableWalls.Add(northwall);
+        }
+
+        if (ColumnIndex < Columns - 1)
+        {
+            availableWalls.Add(eastwall);
+        }
+
+        if (RowIndex < Rows - 1)
+        {
+            availableWalls.Add(southwall);
+        }
+
+        if (ColumnIndex > 0)
+        {
+            availableWalls.Add(westwall);
+        }
+
+        return availableWalls.ToArray();
+    }
 }

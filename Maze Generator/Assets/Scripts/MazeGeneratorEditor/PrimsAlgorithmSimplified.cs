@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrimsAlgorithm1 : MazeAlgorithm1
+public class PrimsAlgorithmSimplified : MazeAlgorithm
 {
     private List<MazeCell> FrontTierCells = new List<MazeCell>();
 
@@ -21,8 +21,8 @@ public class PrimsAlgorithm1 : MazeAlgorithm1
         }
 
         isfinished = true;
-        mazeGenerator.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
-        Debug.Log("<color=lime><B>Successfully generated a maze with \"Prim's Algorithm\"</B></color>");
+        mazeGenerator.mazeParent.GetComponent<MazeParent>().isdoneGenerating = true;
+        Debug.Log("<color=lime><B>Successfully generated a maze with \"Prim's Algorithm(Simplified)\"</B></color>");
     }
 
     private void Carve()

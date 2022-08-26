@@ -10,7 +10,7 @@ public class MazeGenerator : MonoBehaviour
     public int Columns;
     public GameObject mazeParentObject;
     public GameObject mazeParent;
-    public MazeAlgorithm1 algorithm;
+    public MazeAlgorithm algorithm;
     public MazeCell[,] maze;
     public GameObject floor;
     public GameObject wall;
@@ -20,11 +20,12 @@ public class MazeGenerator : MonoBehaviour
     public _ __;
     public MazeAlgorithms Algorithm;
     public Routes Route;
+    public int percent;
 
     public enum CombineOptions { combine_Into_One_Mesh, combine_Into_Floors_And_Walls };
     public enum _ { Destroy_Combined_Meshes, Disable_Combined_Meshes };
     public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal};
-    public enum Routes { Braid, PartialBraid, Perfect, Sparse };
+    public enum Routes { Braid, Perfect, Sparse };
     public void InstantiateMaze(int rows, int columns)
     {
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -109,6 +110,15 @@ public class MazeGenerator : MonoBehaviour
                 {
                     maze[i, j].eastwall = maze[i, j + 1].westwall;
                 }
+            }
+        }
+
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Columns; j++)
+            {
+                maze[i, j].Rows = this.Rows;
+                maze[i, j].Columns = this.Columns;
             }
         }
     }

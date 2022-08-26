@@ -25,10 +25,23 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Options", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
         mazeGenerator.combineOptions = (MazeGenerator.CombineOptions)EditorGUILayout.EnumPopup("Combine Options", mazeGenerator.combineOptions);
         mazeGenerator.__ = (MazeGenerator._)EditorGUILayout.EnumPopup(" ", mazeGenerator.__);
         mazeGenerator.Algorithm = (MazeGenerator.MazeAlgorithms)EditorGUILayout.EnumPopup("Algorithm", mazeGenerator.Algorithm);
         mazeGenerator.Route = (MazeGenerator.Routes)EditorGUILayout.EnumPopup("Route", mazeGenerator.Route);
+
+        switch (mazeGenerator.Route)
+        {
+            case MazeGenerator.Routes.Braid:
+                mazeGenerator.percent = EditorGUILayout.IntSlider("Braid Percent", mazeGenerator.percent, 0, 100);
+                break;
+            case MazeGenerator.Routes.Perfect:
+                break;
+            case MazeGenerator.Routes.Sparse:
+                mazeGenerator.percent = EditorGUILayout.IntSlider("Sparse Percent", mazeGenerator.percent, 0, 100);
+                break;
+        }
         EditorGUILayout.Space();
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Buttons", EditorStyles.boldLabel);
@@ -38,12 +51,68 @@ public class EditorMazeGenerator : Editor
         {
             mazeGenerator.algorithm.CreateMaze();
 
-            switch(mazeGenerator.Route)
+            switch (mazeGenerator.Route)
             {
+                #region Braid
                 case MazeGenerator.Routes.Braid:
+
+                    List<MazeCell> DeadEndCells = new List<MazeCell>();
+                    int AmountOfCellsToRemoveFromDeadEndCells = 0;
+
+                    #region checking for each cell's links
+                    for (int i = 0; i < mazeGenerator.Rows; i++)
+                    {
+                        for (int j = 0; j < mazeGenerator.Columns; j++)
+                        {
+                            if (mazeGenerator.maze[i, j].northwall == null)
+                            {
+                                ++mazeGenerator.maze[i, j].links;
+                            }
+
+                            if (mazeGenerator.maze[i, j].eastwall == null)
+                            {
+                                ++mazeGenerator.maze[i, j].links;
+                            }
+
+                            if (mazeGenerator.maze[i, j].southwall == null)
+                            {
+                                ++mazeGenerator.maze[i, j].links;
+                            }
+
+                            if (mazeGenerator.maze[i, j].westwall == null)
+                            {
+                                ++mazeGenerator.maze[i, j].links;
+                            }
+
+                            if(mazeGenerator.maze[i, j].links == 1)
+                            {
+                                DeadEndCells.Add(mazeGenerator.maze[i, j]);
+                            }
+                        }
+                    }
+                    #endregion
+
+                    AmountOfCellsToRemoveFromDeadEndCells = Mathf.FloorToInt(DeadEndCells.Count * ((100 - mazeGenerator.percent) * 0.01f));
+
+                    for (int i = 0; i < AmountOfCellsToRemoveFromDeadEndCells; i++)
+                    {
+                        DeadEndCells.Remove(DeadEndCells[Random.Range(0, DeadEndCells.Count)]);
+                    }
+
+                    for (int i = 0; i < DeadEndCells.Count; i++)
+                    {
+                        int randomCellToGoTo = 0;
+
+                        if (DeadEndCells[i].AvailableWalls().Length > 0)
+                        {
+                            randomCellToGoTo = Random.Range(0, DeadEndCells[i].AvailableWalls().Length);
+                        }
+
+                        DestroyImmediate(DeadEndCells[i].AvailableWalls()[randomCellToGoTo]);
+                    }
+
                     break;
-                case MazeGenerator.Routes.PartialBraid:
-                    break;
+                #endregion
                 case MazeGenerator.Routes.Perfect:
                     break;
                 case MazeGenerator.Routes.Sparse:
@@ -55,7 +124,7 @@ public class EditorMazeGenerator : Editor
         {
             if(mazeGenerator.mazeParent != null)
             {
-                mazeGenerator.mazeParent.GetComponent<MazeParent1>().combineMaze();
+                mazeGenerator.mazeParent.GetComponent<MazeParent>().combineMaze();
             }
             else
             {
@@ -67,7 +136,7 @@ public class EditorMazeGenerator : Editor
         {
             if(mazeGenerator.mazeParent != null)
             {
-                mazeGenerator.mazeParent.GetComponent<MazeParent1>().saveMaze();
+                mazeGenerator.mazeParent.GetComponent<MazeParent>().saveMaze();
             }
             else
             {
@@ -84,13 +153,13 @@ public class EditorMazeGenerator : Editor
         switch(mazeGenerator.Algorithm)
         {
             case MazeGenerator.MazeAlgorithms.HuntAndKillAlgorithm:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<HuntAndKillAlgorithm1>();
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<HuntAndKillAlgorithm>();
                 break;
             case MazeGenerator.MazeAlgorithms.RecursiveBackTracking:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking1>();
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<RecursiveBacktracking>();
                 break;
             case MazeGenerator.MazeAlgorithms.PrimsAlgorithm:
-                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithm1>();
+                mazeGenerator.algorithm = mazeGenerator.GetComponent<PrimsAlgorithmSimplified>();
                 break;
         }
     }

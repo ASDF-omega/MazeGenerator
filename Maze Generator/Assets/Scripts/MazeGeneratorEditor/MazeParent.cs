@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [ExecuteInEditMode]
-public class MazeParent1 : MonoBehaviour
+public class MazeParent : MonoBehaviour
 {
     private GameObject maze;
     private GameObject wallParent;

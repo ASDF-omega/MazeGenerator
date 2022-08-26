@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RecursiveBacktracking1 : MazeAlgorithm1
+public class RecursiveBacktracking : MazeAlgorithm
 {
     public override void CreateMaze()
     {
@@ -29,7 +29,7 @@ public class RecursiveBacktracking1 : MazeAlgorithm1
             if (currentCell == initialCell)
             {
                 isfinished = true;
-                mazeGenerator.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
+                mazeGenerator.mazeParent.GetComponent<MazeParent>().isdoneGenerating = true;
                 Debug.Log("<color=lime><B>Successfully generated a maze with \"RecursiveBacktrackingAlgorithm\"</B></color>");
                 return;
             }

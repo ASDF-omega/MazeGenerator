@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class HuntAndKillAlgorithm1 : MazeAlgorithm1
+public class HuntAndKillAlgorithm : MazeAlgorithm
 {
     public override void CreateMaze()
     {
@@ -35,7 +35,7 @@ public class HuntAndKillAlgorithm1 : MazeAlgorithm1
 
         if(isfinished)
         {
-            mazeGenerator.mazeParent.GetComponent<MazeParent1>().isdoneGenerating = true;
+            mazeGenerator.mazeParent.GetComponent<MazeParent>().isdoneGenerating = true;
             Debug.Log("<color=lime><B>Successfully generated a maze with \"HuntAndKillAlgorithm\"</B></color>");
             return;
         }
