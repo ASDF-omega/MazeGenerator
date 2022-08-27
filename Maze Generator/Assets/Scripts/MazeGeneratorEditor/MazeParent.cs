@@ -138,11 +138,11 @@ public class MazeParent : MonoBehaviour
             floorCombineInstance[i].mesh = floorMeshFilters[i].sharedMesh;
             floorCombineInstance[i].transform = floorMeshFilters[i].transform.localToWorldMatrix;
 
-            if(mazeGenerator.__ == MazeGenerator._.Destroy_Combined_Meshes)
+            if(mazeGenerator.__ == MazeGenerator.CombinedMeshes.Destroy)
             {
                 DestroyImmediate(floorMeshFilters[i].gameObject);
             }
-            else if(mazeGenerator.__ == MazeGenerator._.Disable_Combined_Meshes)
+            else if(mazeGenerator.__ == MazeGenerator.CombinedMeshes.Disable)
             {
                 floorMeshFilters[i].gameObject.SetActive(false);
                 floorMeshFilters[i].transform.parent = floorParent.transform;
@@ -171,11 +171,11 @@ public class MazeParent : MonoBehaviour
             wallCombineInstance[j].mesh = wallMeshFilters[j].sharedMesh;
             wallCombineInstance[j].transform = wallMeshFilters[j].transform.localToWorldMatrix;
 
-            if (mazeGenerator.__ == MazeGenerator._.Destroy_Combined_Meshes)
+            if (mazeGenerator.__ == MazeGenerator.CombinedMeshes.Destroy)
             {
                 DestroyImmediate(wallMeshFilters[j].gameObject);
             }
-            else if (mazeGenerator.__ == MazeGenerator._.Disable_Combined_Meshes)
+            else if (mazeGenerator.__ == MazeGenerator.CombinedMeshes.Disable)
             {
                 wallMeshFilters[j].gameObject.SetActive(false);
                 wallMeshFilters[j].transform.parent = wallParent.transform;

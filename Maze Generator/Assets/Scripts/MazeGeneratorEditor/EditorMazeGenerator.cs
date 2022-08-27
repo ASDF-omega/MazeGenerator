@@ -27,7 +27,7 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.LabelField("Options", EditorStyles.boldLabel);
         EditorGUILayout.Space();
         mazeGenerator.CombineAs = (MazeGenerator.CombineOptions)EditorGUILayout.EnumPopup("Combine As", mazeGenerator.CombineAs);
-        mazeGenerator.__ = (MazeGenerator._)EditorGUILayout.EnumPopup(" ", mazeGenerator.__);
+        mazeGenerator.__ = (MazeGenerator.CombinedMeshes)EditorGUILayout.EnumPopup("Combined Meshes", mazeGenerator.__);
         mazeGenerator.Algorithm = (MazeGenerator.MazeAlgorithms)EditorGUILayout.EnumPopup("Algorithm", mazeGenerator.Algorithm);
         mazeGenerator.Route = (MazeGenerator.Routes)EditorGUILayout.EnumPopup("Route", mazeGenerator.Route);
 

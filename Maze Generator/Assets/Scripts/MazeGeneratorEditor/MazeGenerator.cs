@@ -17,13 +17,13 @@ public class MazeGenerator : MonoBehaviour
 
     [Header("Options")]
     public CombineOptions CombineAs;
-    public _ __;
+    public CombinedMeshes __;
     public MazeAlgorithms Algorithm;
     public Routes Route;
     public int percent;
 
     public enum CombineOptions { SingleMesh, FloorMeshAndWallMesh };
-    public enum _ { Destroy_Combined_Meshes, Disable_Combined_Meshes };
+    public enum CombinedMeshes { Destroy, Disable };
     public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal};
     public enum Routes { Braid, Perfect, Sparse };
     public void InstantiateMaze(int rows, int columns)
