@@ -35,23 +35,23 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                GameObject Floor = Instantiate(floor, new Vector3(j * floor.transform.localScale.x, 0, -i * floor.transform.localScale.z), Quaternion.identity);
+                GameObject Floor = Instantiate(floor, new Vector3(j, 0, -i), Quaternion.identity);
                 maze[i, j] = Floor.GetComponent<MazeCell>();
                 Floor.name = "Floor_" + i + ", " + j;
                 Floor.transform.parent = mazeParent.transform;
 
 
-                GameObject NorthWall = Instantiate(wall, new Vector3(j * floor.transform.localScale.x, 0.5f, -i * floor.transform.localScale.z + Floor.transform.localScale.z / 2), Quaternion.identity);
+                GameObject NorthWall = Instantiate(wall, new Vector3(j, 0.5f, -i + Floor.transform.localScale.z / 2), Quaternion.identity);
                 maze[i, j].northwall = NorthWall;
                 NorthWall.transform.parent = mazeParent.transform;
-                GameObject WestWall = Instantiate(wall, new Vector3(j * floor.transform.localScale.x - Floor.transform.localScale.x / 2, 0.5f, -i * floor.transform.localScale.z), Quaternion.Euler(0, 90, 0));
+                GameObject WestWall = Instantiate(wall, new Vector3(j - Floor.transform.localScale.z / 2, 0.5f, -i), Quaternion.Euler(0, 90, 0));
                 maze[i, j].westwall = WestWall;
                 WestWall.transform.parent = mazeParent.transform;
 
                 if (i == rows - 1)
                 {
                     //instantiates walls on the southern edge of the maze
-                    GameObject SouthEdgeWall = Instantiate(wall, new Vector3(j * floor.transform.localScale.x, 0.5f, -i * floor.transform.localScale.z - Floor.transform.localScale.z / 2), Quaternion.identity);
+                    GameObject SouthEdgeWall = Instantiate(wall, new Vector3(j, 0.5f, -i - Floor.transform.localScale.z / 2), Quaternion.identity);
                     maze[i, j].southwall = SouthEdgeWall;
                     SouthEdgeWall.transform.parent = mazeParent.transform;
                 }
@@ -59,7 +59,7 @@ public class MazeGenerator : MonoBehaviour
                 if (j == columns - 1)
                 {
                     //instantiates walls on the eastern edge of the maze
-                    GameObject EastEdgeWall = Instantiate(wall, new Vector3(j * floor.transform.localScale.x + Floor.transform.localScale.z / 2, 0.5f, -i * floor.transform.localScale.z), Quaternion.Euler(0, 90, 0));
+                    GameObject EastEdgeWall = Instantiate(wall, new Vector3(j + Floor.transform.localScale.z / 2, 0.5f, -i), Quaternion.Euler(0, 90, 0));
                     maze[i, j].eastwall = EastEdgeWall;
                     EastEdgeWall.transform.parent = mazeParent.transform;
                 }

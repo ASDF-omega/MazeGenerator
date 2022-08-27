@@ -49,20 +49,6 @@ public class EditorMazeGenerator : Editor
 
         if (GUILayout.Button("Generate New Maze"))
         {
-            if(mazeGenerator.Route == MazeGenerator.Routes.Sparse)
-            {
-                int AmountOfCellsToRemove;
-                List<MazeCell> CellsToRemove = new List<MazeCell>();
-
-                AmountOfCellsToRemove = Mathf.FloorToInt(mazeGenerator.Rows * mazeGenerator.Columns * (100 - mazeGenerator.percent) * 0.01f);
-
-                for (int i = 0; i < AmountOfCellsToRemove; i++)
-                {
-                    mazeGenerator.maze[Random.Range(0, mazeGenerator.Rows), Random.Range(0, mazeGenerator.Columns)].disabled = true;
-                }
-
-            }
-
             mazeGenerator.algorithm.CreateMaze();
 
             switch (mazeGenerator.Route)
@@ -106,6 +92,10 @@ public class EditorMazeGenerator : Editor
                     }
                     #endregion
 
+                    for (int i = 0; i < DeadEndCells.Count; i++)
+                    {
+                        Debug.Log(DeadEndCells[i]);
+                    }
                     AmountOfCellsToRemoveFromDeadEndCells = Mathf.FloorToInt(DeadEndCells.Count * ((100 - mazeGenerator.percent) * 0.01f));
 
                     for (int i = 0; i < AmountOfCellsToRemoveFromDeadEndCells; i++)
@@ -122,6 +112,15 @@ public class EditorMazeGenerator : Editor
                             randomCellToGoTo = Random.Range(0, DeadEndCells[i].AvailableWalls().Length);
                         }
 
+                        Debug.Log(DeadEndCells[i]);
+                        Debug.Log("available walls.length: " + DeadEndCells[i].AvailableWalls().Length);
+
+                        for (int j = 0; j < DeadEndCells[i].AvailableWalls().Length; j++)
+                        {
+                            Debug.Log("Available Walls", DeadEndCells[i].AvailableWalls()[j]);
+                        }
+
+                        Debug.Log("randomcell to go to: " + DeadEndCells[i].AvailableWalls()[randomCellToGoTo]);
                         DestroyImmediate(DeadEndCells[i].AvailableWalls()[randomCellToGoTo]);
                     }
 
