@@ -47,7 +47,7 @@ public class MazeParent : MonoBehaviour
     {
         if(!isCombined)
         {
-            if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_Floors_And_Walls)
+            if(mazeGenerator.CombineAs == MazeGenerator.CombineOptions.FloorMeshAndWallMesh)
             {
                 #region combine as two mesh
                 floorParent = new GameObject();
@@ -65,7 +65,7 @@ public class MazeParent : MonoBehaviour
                 combineAsTwoMesh();
                 #endregion
             }
-            else if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_One_Mesh)
+            else if(mazeGenerator.CombineAs == MazeGenerator.CombineOptions.SingleMesh)
             {
                 #region combine as two mesh first
                 floorParent = new GameObject();
@@ -195,7 +195,7 @@ public class MazeParent : MonoBehaviour
     {
         if (isCombined)
         {
-            if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_Floors_And_Walls)
+            if(mazeGenerator.CombineAs == MazeGenerator.CombineOptions.FloorMeshAndWallMesh)
             {
                 #region save floor Mesh
                 string floorMeshPath = "Assets/Meshes/" + floorParent.name + ".asset";
@@ -211,7 +211,7 @@ public class MazeParent : MonoBehaviour
                 AssetDatabase.CreateAsset(wallMesh, wallMeshPath);
                 #endregion
             }
-            else if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_One_Mesh)
+            else if(mazeGenerator.CombineAs == MazeGenerator.CombineOptions.SingleMesh)
             {
                 #region save maze Mesh
                 string saveMazePath = "Assets/Meshes/" + gameObject.name + ".asset";
@@ -226,12 +226,12 @@ public class MazeParent : MonoBehaviour
             savePath = AssetDatabase.GenerateUniqueAssetPath(savePath);
             maze = PrefabUtility.SaveAsPrefabAsset(this.gameObject, savePath, out bool outbool);
             
-            if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_Floors_And_Walls)
+            if(mazeGenerator.CombineAs == MazeGenerator.CombineOptions.FloorMeshAndWallMesh)
             {
                 floorParent.GetComponent<MeshFilter>().sharedMesh = Instantiate(floorParent.GetComponent<MeshFilter>().sharedMesh);
                 wallParent.GetComponent<MeshFilter>().sharedMesh = Instantiate(wallParent.GetComponent<MeshFilter>().sharedMesh);
             }
-            else if(mazeGenerator.combineOptions == MazeGenerator.CombineOptions.combine_Into_One_Mesh)
+            else if(mazeGenerator.CombineAs == MazeGenerator.CombineOptions.SingleMesh)
             {
                 GetComponent<MeshFilter>().sharedMesh = Instantiate(GetComponent<MeshFilter>().sharedMesh);
             }
