@@ -49,6 +49,20 @@ public class EditorMazeGenerator : Editor
 
         if (GUILayout.Button("Generate New Maze"))
         {
+            if(mazeGenerator.Route == MazeGenerator.Routes.Sparse)
+            {
+                int AmountOfCellsToRemove;
+                List<MazeCell> CellsToRemove = new List<MazeCell>();
+
+                AmountOfCellsToRemove = Mathf.FloorToInt(mazeGenerator.Rows * mazeGenerator.Columns * (100 - mazeGenerator.percent) * 0.01f);
+
+                for (int i = 0; i < AmountOfCellsToRemove; i++)
+                {
+                    mazeGenerator.maze[Random.Range(0, mazeGenerator.Rows), Random.Range(0, mazeGenerator.Columns)].disabled = true;
+                }
+
+            }
+
             mazeGenerator.algorithm.CreateMaze();
 
             switch (mazeGenerator.Route)

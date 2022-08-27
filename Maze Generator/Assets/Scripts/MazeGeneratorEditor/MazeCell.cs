@@ -19,6 +19,7 @@ public class MazeCell : MonoBehaviour
     public int Rows;
     public int Columns;
     public int links;
+    public bool disabled = false;
     public bool isVisited = false;
 
     public GameObject[] AvailableWalls()
