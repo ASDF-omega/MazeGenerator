@@ -92,10 +92,6 @@ public class EditorMazeGenerator : Editor
                     }
                     #endregion
 
-                    for (int i = 0; i < DeadEndCells.Count; i++)
-                    {
-                        Debug.Log(DeadEndCells[i]);
-                    }
                     AmountOfCellsToRemoveFromDeadEndCells = Mathf.FloorToInt(DeadEndCells.Count * ((100 - mazeGenerator.percent) * 0.01f));
 
                     for (int i = 0; i < AmountOfCellsToRemoveFromDeadEndCells; i++)
@@ -112,16 +108,10 @@ public class EditorMazeGenerator : Editor
                             randomCellToGoTo = Random.Range(0, DeadEndCells[i].AvailableWalls().Length);
                         }
 
-                        Debug.Log(DeadEndCells[i]);
-                        Debug.Log("available walls.length: " + DeadEndCells[i].AvailableWalls().Length);
-
-                        for (int j = 0; j < DeadEndCells[i].AvailableWalls().Length; j++)
+                        if(DeadEndCells[i].AvailableWalls().Length > 0)
                         {
-                            Debug.Log("Available Walls", DeadEndCells[i].AvailableWalls()[j]);
+                            DestroyImmediate(DeadEndCells[i].AvailableWalls()[randomCellToGoTo]);
                         }
-
-                        Debug.Log("randomcell to go to: " + DeadEndCells[i].AvailableWalls()[randomCellToGoTo]);
-                        DestroyImmediate(DeadEndCells[i].AvailableWalls()[randomCellToGoTo]);
                     }
 
                     break;
