@@ -4,15 +4,15 @@ using UnityEngine;
 
 public abstract class MazeAlgorithm : MonoBehaviour
 {
-    public MazeCell[,] maze;
+    public OrthogonalMazeCell[,] maze;
     public int rows;
     public int columns;
     public bool isfinished;
 
     protected int currentRow = 0;
     protected int currentColumn = 0;
-    protected MazeCell currentCell;
-    protected MazeCell initialCell;
+    protected OrthogonalMazeCell currentCell;
+    protected OrthogonalMazeCell initialCell;
     protected bool isEditor = false;
 
     [SerializeField] protected MazeGenerator mazeGenerator;
@@ -115,9 +115,9 @@ public abstract class MazeAlgorithm : MonoBehaviour
         }
     }
 
-    public MazeCell[] adjacentUnvisitedCellsOf(MazeCell cell)
+    public OrthogonalMazeCell[] adjacentUnvisitedCellsOf(OrthogonalMazeCell cell)
     {
-        List<MazeCell> adjacentUnvisitedCellsList = new List<MazeCell>();
+        List<OrthogonalMazeCell> adjacentUnvisitedCellsList = new List<OrthogonalMazeCell>();
 
         if(cell.RowIndex > 0)
         {
@@ -154,9 +154,9 @@ public abstract class MazeAlgorithm : MonoBehaviour
         return adjacentUnvisitedCellsList.ToArray();
     }
 
-    public MazeCell[] adjacentVisitedCellsOf(MazeCell cell)
+    public OrthogonalMazeCell[] adjacentVisitedCellsOf(OrthogonalMazeCell cell)
     {
-        List<MazeCell> adjacentVisitedCells = new List<MazeCell>();
+        List<OrthogonalMazeCell> adjacentVisitedCells = new List<OrthogonalMazeCell>();
 
         if (cell.RowIndex > 0)
         {

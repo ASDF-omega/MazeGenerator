@@ -28,6 +28,7 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.Space();
         mazeGenerator.CombineAs = (MazeGenerator.CombineOptions)EditorGUILayout.EnumPopup("Combine As", mazeGenerator.CombineAs);
         mazeGenerator.__ = (MazeGenerator.CombinedMeshes)EditorGUILayout.EnumPopup("Combined Meshes", mazeGenerator.__);
+        EditorGUILayout.Space();
         mazeGenerator.Algorithm = (MazeGenerator.MazeAlgorithms)EditorGUILayout.EnumPopup("Algorithm", mazeGenerator.Algorithm);
         mazeGenerator.Route = (MazeGenerator.Routes)EditorGUILayout.EnumPopup("Route", mazeGenerator.Route);
 
@@ -56,7 +57,7 @@ public class EditorMazeGenerator : Editor
                 #region Braid
                 case MazeGenerator.Routes.Braid:
 
-                    List<MazeCell> DeadEndCells = new List<MazeCell>();
+                    List<OrthogonalMazeCell> DeadEndCells = new List<OrthogonalMazeCell>();
                     int AmountOfCellsToRemoveFromDeadEndCells = 0;
 
                     #region checking for each cell's links
@@ -148,7 +149,7 @@ public class EditorMazeGenerator : Editor
         }
         #endregion
 
-        mazeGenerator.maze = new MazeCell[mazeGenerator.Rows, mazeGenerator.Columns];
+        mazeGenerator.maze = new OrthogonalMazeCell[mazeGenerator.Rows, mazeGenerator.Columns];
         mazeGenerator.algorithm.maze = mazeGenerator.maze;
         mazeGenerator.algorithm.rows = mazeGenerator.Rows;
         mazeGenerator.algorithm.columns = mazeGenerator.Columns;
