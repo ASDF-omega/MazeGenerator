@@ -11,7 +11,7 @@ public class MazeGenerator : MonoBehaviour
     public GameObject mazeParentObject;
     public GameObject mazeParent;
     public MazeAlgorithm algorithm;
-    public OrthogonalMazeCell[,] maze;
+    public OrthogonalCell[,] maze;
     public GameObject floor;
     public GameObject wall;
 
@@ -21,13 +21,13 @@ public class MazeGenerator : MonoBehaviour
     public MazeAlgorithms Algorithm;
     public Routes Route;
     public int percent;
+    public CellType tessellation;
 
     public enum CombineOptions { SingleMesh, FloorMeshAndWallMesh };
     public enum CombinedMeshes { Destroy, Disable };
     public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal};
     public enum Routes { Braid, Perfect, Sparse };
-
-    public enum Tessellation { Orthogonal, Delta, Sigma, Theata};
+    public enum CellType { Gamma, Delta, Sigma, Theata};
     public void InstantiateMaze(int rows, int columns)
     {
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -38,7 +38,7 @@ public class MazeGenerator : MonoBehaviour
             for (int j = 0; j < columns; j++)
             {
                 GameObject Floor = Instantiate(floor, new Vector3(j, 0, -i), Quaternion.identity);
-                maze[i, j] = Floor.GetComponent<OrthogonalMazeCell>();
+                maze[i, j] = Floor.GetComponent<OrthogonalCell>();
                 Floor.name = "Floor_" + i + ", " + j;
                 Floor.transform.parent = mazeParent.transform;
 

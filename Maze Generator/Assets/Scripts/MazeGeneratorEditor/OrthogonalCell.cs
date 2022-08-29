@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrthogonalMazeCell : MonoBehaviour
+public class OrthogonalCell : MonoBehaviour
 {
     public GameObject northwall;
     public GameObject eastwall;
     public GameObject southwall;
     public GameObject westwall;
-    public OrthogonalMazeCell northcell;
-    public OrthogonalMazeCell eastcell;
-    public OrthogonalMazeCell southcell;
-    public OrthogonalMazeCell westcell;
-    public OrthogonalMazeCell nextcell;
-    public OrthogonalMazeCell previouscell;
+    public OrthogonalCell northcell;
+    public OrthogonalCell eastcell;
+    public OrthogonalCell southcell;
+    public OrthogonalCell westcell;
+    public OrthogonalCell nextcell;
+    public OrthogonalCell previouscell;
     public int RowIndex;
     public int ColumnIndex;
     public int Rows;
     public int Columns;
     public int links;
+    public bool isEnabled = true;
     public bool isVisited = false;
 
     public GameObject[] AvailableWalls()

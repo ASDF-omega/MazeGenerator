@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PrimsAlgorithmSimplified : MazeAlgorithm
 {
-    private List<OrthogonalMazeCell> FrontTierCells = new List<OrthogonalMazeCell>();
+    private List<OrthogonalCell> FrontTierCells = new List<OrthogonalCell>();
 
     public override void CreateMaze()
     {
@@ -28,7 +28,7 @@ public class PrimsAlgorithmSimplified : MazeAlgorithm
     private void Carve()
     {
         int direction;
-        OrthogonalMazeCell cellToGo;
+        OrthogonalCell cellToGo;
 
         for (int i = 0; i < FrontTierCells.Count; i++)
         {
@@ -83,7 +83,7 @@ public class PrimsAlgorithmSimplified : MazeAlgorithm
         }
     }
 
-    private void AddAdjacents(OrthogonalMazeCell[] cells)
+    private void AddAdjacents(OrthogonalCell[] cells)
     {
         for (int i = 0; i < cells.Length; i++)
         {
