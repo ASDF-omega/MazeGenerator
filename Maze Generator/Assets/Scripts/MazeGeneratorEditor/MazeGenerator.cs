@@ -11,7 +11,7 @@ public class MazeGenerator : MonoBehaviour
     public GameObject mazeParentObject;
     public GameObject mazeParent;
     public MazeAlgorithm algorithm;
-    public OrthogonalCell[,] maze;
+    public GammaCell[,] maze;
     public GameObject floor;
     public GameObject wall;
 
@@ -25,11 +25,12 @@ public class MazeGenerator : MonoBehaviour
 
     public enum CombineOptions { SingleMesh, FloorMeshAndWallMesh };
     public enum CombinedMeshes { Destroy, Disable };
-    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal};
+    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal };
     public enum Routes { Braid, Perfect, Sparse };
-    public enum CellType { Gamma, Delta, Sigma, Theata};
+    public enum CellType { Gamma, Delta, Sigma, Theata };
     public void InstantiateMaze(int rows, int columns)
     {
+        DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
         mazeParent.name = "Maze";
 
@@ -37,43 +38,74 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < columns; j++)
             {
-                GameObject Floor = Instantiate(floor, new Vector3(j, 0, -i), Quaternion.identity);
-                maze[i, j] = Floor.GetComponent<OrthogonalCell>();
+                float size = floor.transform.localScale.x;
+                GameObject Floor = Instantiate(floor, new Vector3(j * size, 0, -i * size), Quaternion.identity);
+                maze[i, j] = Floor.GetComponent<GammaCell>();
                 Floor.name = "Floor_" + i + ", " + j;
                 Floor.transform.parent = mazeParent.transform;
-
-
-                GameObject NorthWall = Instantiate(wall, new Vector3(j, 0.5f, -i + Floor.transform.localScale.z / 2), Quaternion.identity);
-                maze[i, j].northwall = NorthWall;
-                NorthWall.transform.parent = mazeParent.transform;
-                GameObject WestWall = Instantiate(wall, new Vector3(j - Floor.transform.localScale.z / 2, 0.5f, -i), Quaternion.Euler(0, 90, 0));
-                maze[i, j].westwall = WestWall;
-                WestWall.transform.parent = mazeParent.transform;
-
-                if (i == rows - 1)
-                {
-                    //instantiates walls on the southern edge of the maze
-                    GameObject SouthEdgeWall = Instantiate(wall, new Vector3(j, 0.5f, -i - Floor.transform.localScale.z / 2), Quaternion.identity);
-                    maze[i, j].southwall = SouthEdgeWall;
-                    SouthEdgeWall.transform.parent = mazeParent.transform;
-                }
-
-                if (j == columns - 1)
-                {
-                    //instantiates walls on the eastern edge of the maze
-                    GameObject EastEdgeWall = Instantiate(wall, new Vector3(j + Floor.transform.localScale.z / 2, 0.5f, -i), Quaternion.Euler(0, 90, 0));
-                    maze[i, j].eastwall = EastEdgeWall;
-                    EastEdgeWall.transform.parent = mazeParent.transform;
-                }
 
                 maze[i, j].RowIndex = i;
                 maze[i, j].ColumnIndex = j;
             }
         }
 
-        for (int i = 0; i < Rows; i++)
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < Columns; j++)
+            for (int j = 0; j < columns; j++)
+            {
+                float sizeX = floor.transform.localScale.x;
+                float sizeY = floor.transform.localScale.y;
+                float sizeZ = floor.transform.localScale.z;
+
+                if (maze[i, j].northwall == null)
+                {
+                    maze[i, j].northwall = Instantiate(wall, new Vector3(j * sizeX, sizeY, -i * sizeZ + sizeZ / 2), Quaternion.identity);
+                    maze[i, j].northwall.transform.parent = mazeParent.transform;
+
+                    if(i > 0)
+                    {
+                        maze[i - 1, j].southwall = maze[i, j].northwall;
+                    }
+                }
+
+                if (maze[i, j].eastwall == null)
+                {
+                    maze[i, j].eastwall = Instantiate(wall, new Vector3(j * sizeX + sizeX/2, sizeY, -i * sizeZ), Quaternion.Euler(0, 90, 0));
+                    maze[i, j].eastwall.transform.parent = mazeParent.transform;
+                    
+                    if(j < columns - 1)
+                    {
+                        maze[i, j + 1].westwall = maze[i, j].eastwall;
+                    }
+                }
+
+                if (maze[i, j].southwall == null)
+                {
+                    maze[i, j].southwall = Instantiate(wall, new Vector3(j * sizeX, sizeY, -i * sizeZ - sizeZ / 2), Quaternion.identity);
+                    maze[i, j].southwall.transform.parent = mazeParent.transform;
+
+                    if(i < rows - 1)
+                    {
+                        maze[i + 1, j].northwall = maze[i, j].southwall;
+                    }
+                }
+
+                if (maze[i, j].westwall == null)
+                {
+                    maze[i, j].westwall = Instantiate(wall, new Vector3(j * sizeX - sizeX/2, sizeY, -i * sizeZ), Quaternion.Euler(0, 90, 0));
+                    maze[i, j].westwall.transform.parent = mazeParent.transform;
+
+                    if(j > 0)
+                    {
+                        maze[i, j - 1].eastwall = maze[i, j].westwall;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
             {
                 if (i > 0)
                 {
@@ -94,33 +126,6 @@ public class MazeGenerator : MonoBehaviour
                 {
                     maze[i, j].westcell = maze[i, j - 1];
                 }
-            }
-        }
-
-        for (int i = 0; i < Rows; i++)
-        {
-            for (int j = 0; j < Columns; j++)
-            {
-                //sets the north wall
-                if (i < Rows - 1)
-                {
-                    maze[i, j].southwall = maze[i + 1, j].northwall;
-                }
-
-                //sets the east wall
-                if (j < Columns - 1)
-                {
-                    maze[i, j].eastwall = maze[i, j + 1].westwall;
-                }
-            }
-        }
-
-        for (int i = 0; i < Rows; i++)
-        {
-            for (int j = 0; j < Columns; j++)
-            {
-                maze[i, j].Rows = this.Rows;
-                maze[i, j].Columns = this.Columns;
             }
         }
     }

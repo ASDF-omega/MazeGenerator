@@ -59,7 +59,7 @@ public class EditorMazeGenerator : Editor
                 #region Braid
                 case MazeGenerator.Routes.Braid:
 
-                    List<OrthogonalCell> DeadEndCells = new List<OrthogonalCell>();
+                    List<GammaCell> DeadEndCells = new List<GammaCell>();
                     int AmountOfCellsToRemoveFromDeadEndCells = 0;
 
                     #region checking for each cell's links
@@ -151,7 +151,7 @@ public class EditorMazeGenerator : Editor
         }
         #endregion
 
-        mazeGenerator.maze = new OrthogonalCell[mazeGenerator.Rows, mazeGenerator.Columns];
+        mazeGenerator.maze = new GammaCell[mazeGenerator.Rows, mazeGenerator.Columns];
         mazeGenerator.algorithm.maze = mazeGenerator.maze;
         mazeGenerator.algorithm.rows = mazeGenerator.Rows;
         mazeGenerator.algorithm.columns = mazeGenerator.Columns;

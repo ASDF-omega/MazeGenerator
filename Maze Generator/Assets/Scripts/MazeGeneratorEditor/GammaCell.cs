@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrthogonalCell : MonoBehaviour
+public class GammaCell : MonoBehaviour
 {
     public GameObject northwall;
     public GameObject eastwall;
     public GameObject southwall;
     public GameObject westwall;
-    public OrthogonalCell northcell;
-    public OrthogonalCell eastcell;
-    public OrthogonalCell southcell;
-    public OrthogonalCell westcell;
-    public OrthogonalCell nextcell;
-    public OrthogonalCell previouscell;
+    public GammaCell northcell;
+    public GammaCell eastcell;
+    public GammaCell southcell;
+    public GammaCell westcell;
+    public GammaCell nextcell;
+    public GammaCell previouscell;
     public int RowIndex;
     public int ColumnIndex;
     public int Rows;

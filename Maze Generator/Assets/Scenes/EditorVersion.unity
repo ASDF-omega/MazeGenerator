@@ -178,10 +178,12 @@ MonoBehaviour:
   algorithm: {fileID: 172566105}
   floor: {fileID: 568780478056876322, guid: 9bd0302bb9732064388478017e579d66, type: 3}
   wall: {fileID: 7174750786059030701, guid: 67c0a8fac23ccff4495456fa16bc7624, type: 3}
-  combineOptions: 1
+  CombineAs: 0
   __: 0
   Algorithm: 2
   Route: 0
+  percent: 0
+  tessellation: 0
 --- !u!114 &172566103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,11 +196,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5cb231be263ec542815522f8809c382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRow: 7
-  currentColumn: 12
   rows: 20
   columns: 20
-  currentCell: {fileID: 0}
   isfinished: 1
   mazeGenerator: {fileID: 172566102}
 --- !u!114 &172566104
@@ -213,11 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48b60abc5bdc16a48a648a430569fbd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRow: 19
-  currentColumn: 19
   rows: 20
   columns: 20
-  currentCell: {fileID: 0}
   isfinished: 1
   mazeGenerator: {fileID: 172566102}
 --- !u!114 &172566105
@@ -232,11 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b550bff7432bd4185b74c6006cbb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRow: 4
-  currentColumn: 12
   rows: 20
   columns: 20
-  currentCell: {fileID: 0}
   isfinished: 1
   mazeGenerator: {fileID: 172566102}
 --- !u!114 &172566106
@@ -251,11 +244,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c59b4afcc3fa2428bef2ad465b9a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRow: 0
-  currentColumn: 0
   rows: 0
   columns: 0
-  currentCell: {fileID: 0}
   isfinished: 0
   mazeGenerator: {fileID: 172566102}
 --- !u!1 &1335184886

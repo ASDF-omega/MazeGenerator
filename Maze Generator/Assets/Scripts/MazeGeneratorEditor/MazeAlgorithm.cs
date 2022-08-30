@@ -4,15 +4,15 @@ using UnityEngine;
 
 public abstract class MazeAlgorithm : MonoBehaviour
 {
-    public OrthogonalCell[,] maze;
+    public GammaCell[,] maze;
     public int rows;
     public int columns;
     public bool isfinished;
 
     protected int currentRow = 0;
     protected int currentColumn = 0;
-    protected OrthogonalCell currentCell;
-    protected OrthogonalCell initialCell;
+    protected GammaCell currentCell;
+    protected GammaCell initialCell;
     protected bool isEditor = false;
 
     [SerializeField] protected MazeGenerator mazeGenerator;
@@ -20,7 +20,6 @@ public abstract class MazeAlgorithm : MonoBehaviour
     public virtual void CreateMaze()
     {
         isfinished = false;
-        DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
         mazeGenerator.InstantiateMaze(rows, columns);
         currentRow = Random.Range(0, rows);
         currentColumn = Random.Range(0, columns);
@@ -115,9 +114,9 @@ public abstract class MazeAlgorithm : MonoBehaviour
         }
     }
 
-    public OrthogonalCell[] adjacentUnvisitedCellsOf(OrthogonalCell cell)
+    public GammaCell[] adjacentUnvisitedCellsOf(GammaCell cell)
     {
-        List<OrthogonalCell> adjacentUnvisitedCellsList = new List<OrthogonalCell>();
+        List<GammaCell> adjacentUnvisitedCellsList = new List<GammaCell>();
 
         if(cell.RowIndex > 0)
         {
@@ -154,9 +153,9 @@ public abstract class MazeAlgorithm : MonoBehaviour
         return adjacentUnvisitedCellsList.ToArray();
     }
 
-    public OrthogonalCell[] adjacentVisitedCellsOf(OrthogonalCell cell)
+    public GammaCell[] adjacentVisitedCellsOf(GammaCell cell)
     {
-        List<OrthogonalCell> adjacentVisitedCells = new List<OrthogonalCell>();
+        List<GammaCell> adjacentVisitedCells = new List<GammaCell>();
 
         if (cell.RowIndex > 0)
         {
