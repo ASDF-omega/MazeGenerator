@@ -28,7 +28,7 @@ public class MazeGenerator : MonoBehaviour
     public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, KruskalsAlgorithm, PrimsAlgorithm, Unicursal };
     public enum Routes { Braid, Perfect, Sparse };
     public enum CellType { Gamma, Delta, Sigma, Theata };
-    public void InstantiateMaze(int rows, int columns)
+    public void InstantiateSquareMaze(int rows, int columns)
     {
         DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -130,3 +130,4 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 }
+

@@ -20,7 +20,20 @@ public abstract class MazeAlgorithm : MonoBehaviour
     public virtual void CreateMaze()
     {
         isfinished = false;
-        mazeGenerator.InstantiateMaze(rows, columns);
+        
+        switch(mazeGenerator.tessellation)
+        {
+            case MazeGenerator.CellType.Gamma:
+                mazeGenerator.InstantiateSquareMaze(rows, columns);
+                break;
+            case MazeGenerator.CellType.Delta:
+                break;
+            case MazeGenerator.CellType.Sigma:
+                break;
+            case MazeGenerator.CellType.Theata:
+                break;
+        }
+
         currentRow = Random.Range(0, rows);
         currentColumn = Random.Range(0, columns);
         currentCell = maze[currentRow, currentColumn];

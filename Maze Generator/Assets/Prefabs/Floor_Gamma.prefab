@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8852605121454630243}
   - component: {fileID: 5825695325471206621}
   m_Layer: 0
-  m_Name: Floor
+  m_Name: Floor_Gamma
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,4 +119,11 @@ MonoBehaviour:
   southcell: {fileID: 0}
   westcell: {fileID: 0}
   nextcell: {fileID: 0}
+  previouscell: {fileID: 0}
+  RowIndex: 0
+  ColumnIndex: 0
+  Rows: 0
+  Columns: 0
+  links: 0
+  isEnabled: 1
   isVisited: 0
