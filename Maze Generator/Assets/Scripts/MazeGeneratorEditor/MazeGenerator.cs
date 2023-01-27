@@ -14,6 +14,7 @@ public class MazeGenerator : MonoBehaviour
     public GammaCell[,] maze;
     public GameObject floor;
     public GameObject wall;
+    public PathFinding pathFinding;
 
     [Header("Options")]
     public CombineOptions CombineAs;
@@ -28,7 +29,7 @@ public class MazeGenerator : MonoBehaviour
     public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm, Unicursal };
     public enum Routes { Braid, Perfect, Sparse };
     public enum CellType { Gamma, Delta, Sigma, Theata };
-    public void InstantiateSquareMaze(int rows, int columns)
+    public void InstantiateGammaMaze(int rows, int columns)
     {
         DestroyImmediate(GameObject.FindGameObjectWithTag("Maze"));
         mazeParent = Instantiate(mazeParentObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -59,7 +60,7 @@ public class MazeGenerator : MonoBehaviour
 
                 if (maze[i, j].northwall == null)
                 {
-                    maze[i, j].northwall = Instantiate(wall, new Vector3(j * sizeX, sizeY, -i * sizeZ + sizeZ / 2), Quaternion.identity);
+                    maze[i, j].northwall = Instantiate(wall, new Vector3(j * sizeX, wall.transform.localScale.y/2, -i * sizeZ + sizeZ / 2), Quaternion.identity);
                     maze[i, j].northwall.transform.parent = mazeParent.transform;
 
                     if(i > 0)
@@ -70,7 +71,7 @@ public class MazeGenerator : MonoBehaviour
 
                 if (maze[i, j].eastwall == null)
                 {
-                    maze[i, j].eastwall = Instantiate(wall, new Vector3(j * sizeX + sizeX/2, sizeY, -i * sizeZ), Quaternion.Euler(0, 90, 0));
+                    maze[i, j].eastwall = Instantiate(wall, new Vector3(j * sizeX + sizeX/2, wall.transform.localScale.y / 2, -i * sizeZ), Quaternion.Euler(0, 90, 0));
                     maze[i, j].eastwall.transform.parent = mazeParent.transform;
                     
                     if(j < columns - 1)
@@ -81,7 +82,7 @@ public class MazeGenerator : MonoBehaviour
 
                 if (maze[i, j].southwall == null)
                 {
-                    maze[i, j].southwall = Instantiate(wall, new Vector3(j * sizeX, sizeY, -i * sizeZ - sizeZ / 2), Quaternion.identity);
+                    maze[i, j].southwall = Instantiate(wall, new Vector3(j * sizeX, wall.transform.localScale.y / 2, -i * sizeZ - sizeZ / 2), Quaternion.identity);
                     maze[i, j].southwall.transform.parent = mazeParent.transform;
 
                     if(i < rows - 1)
@@ -92,7 +93,7 @@ public class MazeGenerator : MonoBehaviour
 
                 if (maze[i, j].westwall == null)
                 {
-                    maze[i, j].westwall = Instantiate(wall, new Vector3(j * sizeX - sizeX/2, sizeY, -i * sizeZ), Quaternion.Euler(0, 90, 0));
+                    maze[i, j].westwall = Instantiate(wall, new Vector3(j * sizeX - sizeX/2, wall.transform.localScale.y / 2, -i * sizeZ), Quaternion.Euler(0, 90, 0));
                     maze[i, j].westwall.transform.parent = mazeParent.transform;
 
                     if(j > 0)

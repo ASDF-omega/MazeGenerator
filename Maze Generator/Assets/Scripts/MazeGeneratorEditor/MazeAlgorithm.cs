@@ -24,7 +24,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
         switch(mazeGenerator.tessellation)
         {
             case MazeGenerator.CellType.Gamma:
-                mazeGenerator.InstantiateSquareMaze(rows, columns);
+                mazeGenerator.InstantiateGammaMaze(rows, columns);
                 break;
             case MazeGenerator.CellType.Delta:
                 break;

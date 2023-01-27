@@ -13,7 +13,7 @@ public class MazeParent : MonoBehaviour
     private delegate void CombineAsTwoMesh();
     private CombineAsTwoMesh combineAsTwoMesh;
 
-    private bool isCombined = false;
+    public bool isCombined = false;
 
     public bool isdoneGenerating = false;
 

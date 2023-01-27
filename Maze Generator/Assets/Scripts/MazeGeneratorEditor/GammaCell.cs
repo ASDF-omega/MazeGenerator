@@ -14,11 +14,15 @@ public class GammaCell : MonoBehaviour
     public GammaCell westcell;
     public GammaCell nextcell;
     public GammaCell previouscell;
+    public GammaCell pathFindingParentCell;
     public int RowIndex;
     public int ColumnIndex;
     public int Rows;
     public int Columns;
     public int links;
+    public int gCost;//distance from start cell
+    public int hCost;//distance to end cell
+    public int fCost;//sum ofo gCost and hCost
     public bool isEnabled = true;
     public bool isVisited = false;
 
@@ -59,5 +63,44 @@ public class GammaCell : MonoBehaviour
          }
 
         return availableWalls.ToArray();
+    }
+
+    public GammaCell[] VisitableCells()
+    {
+        List<GammaCell> visitableCells = new List<GammaCell>();
+
+        if (RowIndex > 0)
+        {
+            if (northwall == null)
+            {
+                visitableCells.Add(northcell);
+            }
+        }
+
+        if (ColumnIndex < Columns - 1)
+        {
+            if (eastwall == null)
+            {
+                visitableCells.Add(eastcell);
+            }
+        }
+
+        if (RowIndex < Rows - 1)
+        {
+            if (southwall == null)
+            {
+                visitableCells.Add(southcell);
+            }
+        }
+
+        if (ColumnIndex > 0)
+        {
+            if (westwall == null)
+            {
+                visitableCells.Add(westcell);
+            }
+        }
+
+        return visitableCells.ToArray();
     }
 }

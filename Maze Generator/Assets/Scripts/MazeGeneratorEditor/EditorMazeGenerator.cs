@@ -9,6 +9,7 @@ public class EditorMazeGenerator : Editor
     public override void OnInspectorGUI()
     {
         MazeGenerator mazeGenerator = target as MazeGenerator;
+        mazeGenerator.pathFinding = mazeGenerator.GetComponent<PathFinding>();
 
         #region inspector display
         EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
@@ -149,8 +150,24 @@ public class EditorMazeGenerator : Editor
                 EditorUtility.DisplayDialog("Error!", "A maze must be generated before it can be saved!", "ok");
             }
         }
-        #endregion
 
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Path Finding", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+        mazeGenerator.pathFinding.StartCell = (GammaCell)EditorGUILayout.ObjectField("Start Cell", mazeGenerator.pathFinding.StartCell, typeof(GammaCell), true);
+        mazeGenerator.pathFinding.EndCell = (GammaCell)EditorGUILayout.ObjectField("End Cell", mazeGenerator.pathFinding.EndCell, typeof(GammaCell), true);
+        if(GUILayout.Button("Show Solution"))
+        {
+            if(mazeGenerator.pathFinding.StartCell == mazeGenerator.pathFinding.EndCell)
+            {
+                EditorUtility.DisplayDialog("Error!", "End Cell cannot be the same as Start Cell", "ok");
+            }
+
+            mazeGenerator.pathFinding.FindPath();
+        }
+
+        #endregion
         mazeGenerator.maze = new GammaCell[mazeGenerator.Rows, mazeGenerator.Columns];
         mazeGenerator.algorithm.maze = mazeGenerator.maze;
         mazeGenerator.algorithm.rows = mazeGenerator.Rows;

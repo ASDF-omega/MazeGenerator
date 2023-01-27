@@ -9,6 +9,14 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
     {
         base.CreateMaze();
         Kill();
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                maze[i, j].isVisited = false;
+            }
+        }
     }
 
     public void Hunt()
