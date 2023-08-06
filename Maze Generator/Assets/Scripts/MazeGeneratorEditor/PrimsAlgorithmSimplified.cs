@@ -19,6 +19,8 @@ public class PrimsAlgorithmSimplified : MazeAlgorithm
                 maze[i, j].isVisited = false;
             }
         }
+
+        finalCell = currentCell;
     }
 
     private void Generate()

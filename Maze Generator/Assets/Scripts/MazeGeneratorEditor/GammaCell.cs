@@ -22,7 +22,7 @@ public class GammaCell : MonoBehaviour
     public int links;
     public int gCost;//distance from start cell
     public int hCost;//distance to end cell
-    public int fCost;//sum ofo gCost and hCost
+    public int fCost;//sum of gCost and hCost
     public bool isEnabled = true;
     public bool isVisited = false;
 

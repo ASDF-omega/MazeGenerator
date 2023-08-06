@@ -26,7 +26,7 @@ public class MazeGenerator : MonoBehaviour
 
     public enum CombineOptions { SingleMesh, FloorMeshAndWallMesh };
     public enum CombinedMeshes { Destroy, Disable };
-    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm, Unicursal };
+    public enum MazeAlgorithms { HuntAndKillAlgorithm, RecursiveBackTracking, PrimsAlgorithm};
     public enum Routes { Braid, Perfect, Sparse };
     public enum CellType { Gamma, Delta, Sigma, Theata };
     public void InstantiateGammaMaze(int rows, int columns)

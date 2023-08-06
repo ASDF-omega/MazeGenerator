@@ -16,6 +16,7 @@ public class RecursiveBacktracking : MazeAlgorithm
                 maze[i, j].isVisited = false;
             }
         }
+        finalCell = currentCell;
     }
 
     private void Generation()

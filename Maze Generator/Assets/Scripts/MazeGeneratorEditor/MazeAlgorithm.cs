@@ -13,6 +13,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
     protected int currentColumn = 0;
     protected GammaCell currentCell;
     protected GammaCell initialCell;
+    protected GammaCell finalCell;
     protected bool isEditor = false;
 
     [SerializeField] protected MazeGenerator mazeGenerator;
@@ -20,7 +21,9 @@ public abstract class MazeAlgorithm : MonoBehaviour
     public virtual void CreateMaze()
     {
         isfinished = false;
-        
+        rows = mazeGenerator.Rows;
+        columns = mazeGenerator.Columns;
+
         switch(mazeGenerator.tessellation)
         {
             case MazeGenerator.CellType.Gamma:
@@ -203,5 +206,32 @@ public abstract class MazeAlgorithm : MonoBehaviour
         }
 
         return adjacentVisitedCells.ToArray();
+    }
+
+    public GammaCell[] adjacentVisitableCellsOf(GammaCell cell)
+    {
+        List<GammaCell> adjacentVisitableCells = new List<GammaCell>();
+
+        if(cell.northwall == null)
+        {
+            adjacentVisitableCells.Add(cell.northcell);
+        }
+
+        if(cell.eastwall == null)
+        {
+            adjacentVisitableCells.Add(cell.eastcell);
+        }
+
+        if (cell.southwall == null)
+        {
+            adjacentVisitableCells.Add(cell.southcell);
+        }
+
+        if (cell.westwall == null)
+        {
+            adjacentVisitableCells.Add(cell.westcell);
+        }
+
+        return adjacentVisitableCells.ToArray();
     }
 }

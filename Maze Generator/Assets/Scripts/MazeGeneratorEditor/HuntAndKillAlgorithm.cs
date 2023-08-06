@@ -17,6 +17,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                 maze[i, j].isVisited = false;
             }
         }
+        finalCell = currentCell;
     }
 
     public void Hunt()

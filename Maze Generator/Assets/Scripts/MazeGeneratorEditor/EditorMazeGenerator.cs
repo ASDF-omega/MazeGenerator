@@ -53,6 +53,8 @@ public class EditorMazeGenerator : Editor
 
         if (GUILayout.Button("Generate New Maze"))
         {
+            mazeGenerator.maze = new GammaCell[mazeGenerator.Rows, mazeGenerator.Columns];
+            mazeGenerator.algorithm.maze = mazeGenerator.maze;
             mazeGenerator.algorithm.CreateMaze();
 
             switch (mazeGenerator.Route)
@@ -125,6 +127,8 @@ public class EditorMazeGenerator : Editor
                 case MazeGenerator.Routes.Sparse:
                     break;
             }
+
+            mazeGenerator.pathFinding.maze = mazeGenerator.maze;
         }
 
         if(GUILayout.Button("Combine Maze"))
@@ -155,25 +159,20 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Path Finding", EditorStyles.boldLabel);
         EditorGUILayout.Space();
-        mazeGenerator.pathFinding.StartCell = (GammaCell)EditorGUILayout.ObjectField("Start Cell", mazeGenerator.pathFinding.StartCell, typeof(GammaCell), true);
-        mazeGenerator.pathFinding.EndCell = (GammaCell)EditorGUILayout.ObjectField("End Cell", mazeGenerator.pathFinding.EndCell, typeof(GammaCell), true);
         if(GUILayout.Button("Show Solution"))
         {
-            if(mazeGenerator.pathFinding.StartCell == mazeGenerator.pathFinding.EndCell)
+            if(mazeGenerator.pathFinding.StartCell == null || mazeGenerator.pathFinding.EndCell == null)
             {
-                EditorUtility.DisplayDialog("Error!", "End Cell cannot be the same as Start Cell", "ok");
+                EditorUtility.DisplayDialog("Error!", "Start Cell or End Cell cannot be null", "ok");
+                return;
             }
 
             mazeGenerator.pathFinding.FindPath();
         }
 
         #endregion
-        mazeGenerator.maze = new GammaCell[mazeGenerator.Rows, mazeGenerator.Columns];
-        mazeGenerator.algorithm.maze = mazeGenerator.maze;
-        mazeGenerator.algorithm.rows = mazeGenerator.Rows;
-        mazeGenerator.algorithm.columns = mazeGenerator.Columns;
 
-        switch(mazeGenerator.Algorithm)
+        switch (mazeGenerator.Algorithm)
         {
             case MazeGenerator.MazeAlgorithms.HuntAndKillAlgorithm:
                 mazeGenerator.algorithm = mazeGenerator.GetComponent<HuntAndKillAlgorithm>();
