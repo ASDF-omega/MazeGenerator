@@ -12,6 +12,16 @@ public class PathFinding : MazeAlgorithm
 
     public void FindPath()
     {
+        if(StartCell == null)
+        {
+            StartCell = maze[0, 0];
+        }
+
+        if(EndCell == null)
+        {
+            EndCell = maze[rows-1, columns-1];
+        }
+
         Open = new List<GammaCell>();
         Closed = new List<GammaCell>();
         currentCell = StartCell;
@@ -39,9 +49,9 @@ public class PathFinding : MazeAlgorithm
         {
             CalculateCosts();
             CellToVisit().previouscell = currentCell;
+            currentCell = CellToVisit();
             Closed.Add(currentCell);
             Open.Remove(currentCell);
-            currentCell = CellToVisit();
 
             for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
             {
@@ -77,6 +87,7 @@ public class PathFinding : MazeAlgorithm
         }
         else
         {
+            Debug.Log(CellsWithLowest_fCost().Length);
             cell = CellsWithLowest_fCost()[0];
         }
 
@@ -92,11 +103,11 @@ public class PathFinding : MazeAlgorithm
 
         for (int i = 0; i < Open.Count; i++)
         {
-            fCost = adjacentVisitableCellsOf(currentCell)[i].fCost;
+            fCost = Open[i].fCost;
             
             if(Open[i].fCost < fCost)
             {
-                fCost = adjacentVisitableCellsOf(currentCell)[i].fCost;
+                fCost = Open[i].fCost;
             }
         }
 
@@ -104,7 +115,7 @@ public class PathFinding : MazeAlgorithm
         {
             if(Open[i].fCost == fCost)
             {
-                cells_WithLowest_fCost.Add(adjacentVisitableCellsOf(currentCell)[i]);
+                cells_WithLowest_fCost.Add(Open[i]);
             }
         }
 
@@ -123,14 +134,6 @@ public class PathFinding : MazeAlgorithm
             if (cells_WithLowest_fCost[i].hCost == hCost)
             {
                 cells_WithLowest_hCost_inCellsWithLowest_fCost.Add(cells_WithLowest_fCost[i]);
-            }
-        }
-
-        for (int i = 0; i < cells_WithLowest_hCost_inCellsWithLowest_fCost.Count; i++)
-        {
-            if(Closed.Contains(cells_WithLowest_hCost_inCellsWithLowest_fCost[i]))
-            {
-                cells_WithLowest_hCost_inCellsWithLowest_fCost.Remove(cells_WithLowest_hCost_inCellsWithLowest_fCost[i]);
             }
         }
 
