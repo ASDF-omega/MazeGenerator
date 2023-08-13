@@ -9,8 +9,6 @@ public class PathFinding : MazeAlgorithm
 
     private List<GammaCell> Open;//List of cells to be evaluated
     private List<GammaCell> Closed;//List of cells already evaluated
-    private Vector2 startCellPosition;
-    private Vector2 endCellPosition;
 
     public void FindPath()
     {
@@ -37,17 +35,8 @@ public class PathFinding : MazeAlgorithm
             }
         }
 
-        int loop = 0;
         while(currentCell != EndCell)
         {
-            ++loop;
-
-            if(loop > 10000)
-            {
-                Debug.Log(loop);
-                return;
-            }
-
             CalculateCosts();
             CellToVisit().previouscell = currentCell;
             Closed.Add(currentCell);
@@ -63,42 +52,19 @@ public class PathFinding : MazeAlgorithm
             }
         }
 
-        GammaCell previousCell = EndCell.previouscell;
-        List<GammaCell> correctPath = new List<GammaCell>();
-
-        while(previousCell != StartCell)
-        {
-            correctPath.Add(previousCell);
-            previousCell.GetComponent<MeshRenderer>().material.color = Color.green;
-            previousCell = previousCell.previouscell;
-        }
     }
 
     private void CalculateCosts()
     {
-        for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
+        for (int i = 0; i < mazeGenerator.Rows; i++)
         {
-            GammaCell cell = adjacentVisitableCellsOf(currentCell)[i];
-            
-            if(!Closed.Contains(cell))
+            for (int j = 0; j < mazeGenerator.Columns; j++)
             {
-                cell.gCost = WalkingDistanceBetweenCells(startCellPosition, new Vector2(cell.RowIndex, cell.ColumnIndex));
-                cell.hCost = WalkingDistanceBetweenCells(endCellPosition, new Vector2(cell.RowIndex, cell.ColumnIndex));
 
-                cell.fCost = cell.gCost + cell.hCost;
+
+                maze[i, j].fCost = maze[i, j].gCost + maze[i, j].hCost;
             }
         }
-    }
-
-    private int WalkingDistanceBetweenCells(Vector2 from, Vector2 to)
-    {
-        int distance;
-        Vector2 directionVector = to - from;
-        int diagonalDistance = Mathf.Abs((int)Mathf.Min(directionVector.x, directionVector.y) * 14);
-
-        distance = diagonalDistance + Mathf.Abs(((int)Mathf.Max(directionVector.x, directionVector.y)-(int)Mathf.Min(directionVector.x, directionVector.y))*10);
-
-        return distance;
     }
 
     private GammaCell CellToVisit()
