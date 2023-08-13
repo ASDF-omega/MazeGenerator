@@ -9,9 +9,24 @@ public class PathFinding : MazeAlgorithm
 
     private List<GammaCell> Open;//List of cells to be evaluated
     private List<GammaCell> Closed;//List of cells already evaluated
+    private Vector2 startCellPosition;
+    private Vector2 endCellPosition;
 
     public void FindPath()
     {
+        if(StartCell == null)
+        {
+            StartCell = maze[0, 0];
+        }
+
+        if(EndCell == null)
+        {
+            EndCell = maze[rows-1, columns-1];
+        }
+
+        startCellPosition = new Vector2(StartCell.RowIndex, StartCell.ColumnIndex);
+        endCellPosition = new Vector2(EndCell.RowIndex, EndCell.ColumnIndex);
+
         Open = new List<GammaCell>();
         Closed = new List<GammaCell>();
         currentCell = StartCell;
@@ -35,13 +50,22 @@ public class PathFinding : MazeAlgorithm
             }
         }
 
+        int loop = 0;
         while(currentCell != EndCell)
         {
+            ++loop;
+
+            if(loop > 10000)
+            {
+                Debug.Log(loop);
+                return;
+            }
+
             CalculateCosts();
             CellToVisit().previouscell = currentCell;
+            currentCell = CellToVisit();
             Closed.Add(currentCell);
             Open.Remove(currentCell);
-            currentCell = CellToVisit();
 
             for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
             {
@@ -52,19 +76,42 @@ public class PathFinding : MazeAlgorithm
             }
         }
 
+        GammaCell previousCell = EndCell.previouscell;
+        List<GammaCell> correctPath = new List<GammaCell>();
+
+        while(previousCell != StartCell)
+        {
+            correctPath.Add(previousCell);
+            previousCell.GetComponent<MeshRenderer>().material.color = Color.green;
+            previousCell = previousCell.previouscell;
+        }
     }
 
     private void CalculateCosts()
     {
-        for (int i = 0; i < mazeGenerator.Rows; i++)
+        for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
         {
-            for (int j = 0; j < mazeGenerator.Columns; j++)
+            GammaCell cell = adjacentVisitableCellsOf(currentCell)[i];
+            
+            if(!Closed.Contains(cell))
             {
+                cell.gCost = WalkingDistanceBetweenCells(startCellPosition, new Vector2(cell.RowIndex, cell.ColumnIndex));
+                cell.hCost = WalkingDistanceBetweenCells(endCellPosition, new Vector2(cell.RowIndex, cell.ColumnIndex));
 
-
-                maze[i, j].fCost = maze[i, j].gCost + maze[i, j].hCost;
+                cell.fCost = cell.gCost + cell.hCost;
             }
         }
+    }
+
+    private int WalkingDistanceBetweenCells(Vector2 from, Vector2 to)
+    {
+        int distance;
+        Vector2 directionVector = to - from;
+        int diagonalDistance = Mathf.Abs((int)Mathf.Min(directionVector.x, directionVector.y) * 14);
+
+        distance = diagonalDistance + Mathf.Abs(((int)Mathf.Max(directionVector.x, directionVector.y)-(int)Mathf.Min(directionVector.x, directionVector.y))*10);
+
+        return distance;
     }
 
     private GammaCell CellToVisit()
@@ -92,11 +139,11 @@ public class PathFinding : MazeAlgorithm
 
         for (int i = 0; i < Open.Count; i++)
         {
-            fCost = adjacentVisitableCellsOf(currentCell)[i].fCost;
+            fCost = Open[i].fCost;
             
             if(Open[i].fCost < fCost)
             {
-                fCost = adjacentVisitableCellsOf(currentCell)[i].fCost;
+                fCost = Open[i].fCost;
             }
         }
 
@@ -104,7 +151,7 @@ public class PathFinding : MazeAlgorithm
         {
             if(Open[i].fCost == fCost)
             {
-                cells_WithLowest_fCost.Add(adjacentVisitableCellsOf(currentCell)[i]);
+                cells_WithLowest_fCost.Add(Open[i]);
             }
         }
 
@@ -123,14 +170,6 @@ public class PathFinding : MazeAlgorithm
             if (cells_WithLowest_fCost[i].hCost == hCost)
             {
                 cells_WithLowest_hCost_inCellsWithLowest_fCost.Add(cells_WithLowest_fCost[i]);
-            }
-        }
-
-        for (int i = 0; i < cells_WithLowest_hCost_inCellsWithLowest_fCost.Count; i++)
-        {
-            if(Closed.Contains(cells_WithLowest_hCost_inCellsWithLowest_fCost[i]))
-            {
-                cells_WithLowest_hCost_inCellsWithLowest_fCost.Remove(cells_WithLowest_hCost_inCellsWithLowest_fCost[i]);
             }
         }
 
