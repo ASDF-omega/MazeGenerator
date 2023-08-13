@@ -124,14 +124,13 @@ public class PathFinding : MazeAlgorithm
         }
         else
         {
-            Debug.Log(CellsWithLowest_fCost().Length);
             cell = CellsWithLowest_fCost()[0];
         }
 
         return cell;
     }
 
-    private GammaCell[] CellsWithLowest_fCost()//bug in this function, it returns a list with nothing in it
+    private GammaCell[] CellsWithLowest_fCost()
     {
         List<GammaCell> cells_WithLowest_fCost = new List<GammaCell>();
         List<GammaCell> cells_WithLowest_hCost_inCellsWithLowest_fCost = new List<GammaCell>();
@@ -175,14 +174,5 @@ public class PathFinding : MazeAlgorithm
         }
 
         return cells_WithLowest_hCost_inCellsWithLowest_fCost.ToArray();
-    }
-
-
-    private void EvaluateAdjacentCells()
-    {
-        for (int i = 0; i < currentCell.VisitableCells().Length; i++)
-        {
-
-        }
     }
 }
