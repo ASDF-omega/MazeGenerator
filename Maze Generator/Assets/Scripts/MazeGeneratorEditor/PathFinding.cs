@@ -14,16 +14,6 @@ public class PathFinding : MazeAlgorithm
 
     public void FindPath()
     {
-        if(StartCell == null)
-        {
-            StartCell = maze[0, 0];
-        }
-
-        if(EndCell == null)
-        {
-            EndCell = maze[rows-1, columns-1];
-        }
-
         Open = new List<GammaCell>();
         Closed = new List<GammaCell>();
         currentCell = StartCell;
