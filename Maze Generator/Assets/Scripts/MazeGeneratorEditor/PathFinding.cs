@@ -24,9 +24,6 @@ public class PathFinding : MazeAlgorithm
             EndCell = maze[rows-1, columns-1];
         }
 
-        startCellPosition = new Vector2(StartCell.RowIndex, StartCell.ColumnIndex);
-        endCellPosition = new Vector2(EndCell.RowIndex, EndCell.ColumnIndex);
-
         Open = new List<GammaCell>();
         Closed = new List<GammaCell>();
         currentCell = StartCell;
