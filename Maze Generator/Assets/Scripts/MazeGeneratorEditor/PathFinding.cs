@@ -124,7 +124,6 @@ public class PathFinding : MazeAlgorithm
         }
         else
         {
-            Debug.Log(CellsWithLowest_fCost().Length);
             cell = CellsWithLowest_fCost()[0];
         }
 
