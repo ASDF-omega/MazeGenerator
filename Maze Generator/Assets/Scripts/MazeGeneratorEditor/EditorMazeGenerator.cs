@@ -161,6 +161,12 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.Space();
         if(GUILayout.Button("Show Solution"))
         {
+            if(mazeGenerator.pathFinding.StartCell == null || mazeGenerator.pathFinding.EndCell == null)
+            {
+                EditorUtility.DisplayDialog("Error!", "Start Cell or End Cell cannot be null", "ok");
+                return;
+            }
+
             mazeGenerator.pathFinding.FindPath();
         }
 

@@ -63,9 +63,9 @@ public class PathFinding : MazeAlgorithm
 
             CalculateCosts();
             CellToVisit().previouscell = currentCell;
-            currentCell = CellToVisit();
             Closed.Add(currentCell);
             Open.Remove(currentCell);
+            currentCell = CellToVisit();
 
             for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
             {
@@ -139,11 +139,11 @@ public class PathFinding : MazeAlgorithm
 
         for (int i = 0; i < Open.Count; i++)
         {
-            fCost = Open[i].fCost;
+            fCost = adjacentVisitableCellsOf(currentCell)[i].fCost;
             
             if(Open[i].fCost < fCost)
             {
-                fCost = Open[i].fCost;
+                fCost = adjacentVisitableCellsOf(currentCell)[i].fCost;
             }
         }
 
@@ -151,7 +151,7 @@ public class PathFinding : MazeAlgorithm
         {
             if(Open[i].fCost == fCost)
             {
-                cells_WithLowest_fCost.Add(Open[i]);
+                cells_WithLowest_fCost.Add(adjacentVisitableCellsOf(currentCell)[i]);
             }
         }
 
@@ -170,6 +170,14 @@ public class PathFinding : MazeAlgorithm
             if (cells_WithLowest_fCost[i].hCost == hCost)
             {
                 cells_WithLowest_hCost_inCellsWithLowest_fCost.Add(cells_WithLowest_fCost[i]);
+            }
+        }
+
+        for (int i = 0; i < cells_WithLowest_hCost_inCellsWithLowest_fCost.Count; i++)
+        {
+            if(Closed.Contains(cells_WithLowest_hCost_inCellsWithLowest_fCost[i]))
+            {
+                cells_WithLowest_hCost_inCellsWithLowest_fCost.Remove(cells_WithLowest_hCost_inCellsWithLowest_fCost[i]);
             }
         }
 
