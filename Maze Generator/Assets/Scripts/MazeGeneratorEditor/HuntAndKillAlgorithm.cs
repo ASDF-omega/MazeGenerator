@@ -33,8 +33,37 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                 currentRow = i;
                 currentColumn = j;
 
-                if(hasAdjacentUnvisitedCells())
+                if(hasAdjacentUnvisitedCells() && adjacentVisitedCellsOf(currentCell).Length > 0)
                 {
+                    #region break the wall between new found cell and a visited cell
+                    int random = new int();
+
+                    if(adjacentVisitedCellsOf(currentCell).Length > 1)
+                    {
+                        random = Random.Range(0, adjacentVisitedCellsOf(currentCell).Length);
+                    }
+                    else
+                    {
+                        random = 0;
+                    }
+
+                    if(adjacentVisitedCellsOf(currentCell)[random] == currentCell.northcell)
+                    {
+                        DestroyImmediate(currentCell.northwall);
+                    }
+                    else if (adjacentVisitedCellsOf(currentCell)[random] == currentCell.eastcell)
+                    {
+                        DestroyImmediate(currentCell.eastwall);
+                    }
+                    else if (adjacentVisitedCellsOf(currentCell)[random] == currentCell.southcell)
+                    {
+                        DestroyImmediate(currentCell.southwall);
+                    }
+                    else if (adjacentVisitedCellsOf(currentCell)[random] == currentCell.westcell)
+                    {
+                        DestroyImmediate(currentCell.westwall);
+                    }
+                    #endregion
                     isfinished = false;
                     Kill();
                     return;

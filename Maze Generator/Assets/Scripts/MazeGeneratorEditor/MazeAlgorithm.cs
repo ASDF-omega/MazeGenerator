@@ -70,7 +70,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
     }
 
     protected void visit()
-    {
+    {//doesn't work with the hunt and kill algorithm
         int direction = Random.Range(0, 4);
 
         if (direction == 0)
