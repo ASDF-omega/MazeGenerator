@@ -29,11 +29,10 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
             for (int j = 0; j < columns; j++)
             {
                 currentCell = maze[i, j];
-                currentCell.isVisited = true;
                 currentRow = i;
                 currentColumn = j;
-
-                if(hasAdjacentUnvisitedCells() && adjacentVisitedCellsOf(currentCell).Length > 0)
+                //the hasAdjacentUnvisitedCells is wrong because currentCell is already set
+                if(adjacentUnvisitedCellsOf(currentCell).Length > 0 && adjacentVisitedCellsOf(currentCell).Length > 0)
                 {
                     #region break the wall between new found cell and a visited cell
                     int random = new int();
@@ -46,6 +45,13 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     {
                         random = 0;
                     }
+                    Debug.Log(currentCell, currentCell);
+                    Debug.Log("adjacentVisitedCellsOf: ");
+
+                    for (int k = 0; k < adjacentVisitedCellsOf(currentCell).Length; k++)
+                    {
+                        Debug.Log( "   -" + adjacentVisitedCellsOf(currentCell)[k], adjacentVisitedCellsOf(currentCell)[k]);
+                    }    
 
                     if(adjacentVisitedCellsOf(currentCell)[random] == currentCell.northcell)
                     {
@@ -64,6 +70,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                         DestroyImmediate(currentCell.westwall);
                     }
                     #endregion
+                    currentCell.isVisited = true;
                     isfinished = false;
                     Kill();
                     return;

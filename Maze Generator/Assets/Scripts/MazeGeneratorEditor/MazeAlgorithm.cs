@@ -83,6 +83,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
                 currentCell.nextcell = currentCell.northcell;
                 currentCell.nextcell.previouscell = currentCell;
                 currentCell = currentCell.northcell;
+                Debug.Log(currentCell, currentCell);
                 return;
             }
         }
@@ -97,6 +98,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
                 currentCell.nextcell = currentCell.eastcell;
                 currentCell.nextcell.previouscell = currentCell;
                 currentCell = currentCell.eastcell;
+                Debug.Log(currentCell, currentCell);
                 return;
             }
         }
@@ -111,6 +113,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
                 currentCell.nextcell = currentCell.southcell;
                 currentCell.nextcell.previouscell = currentCell;
                 currentCell = currentCell.southcell;
+                Debug.Log(currentCell, currentCell);
                 return;
             }
         }
@@ -125,6 +128,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
                 currentCell.nextcell = currentCell.westcell;
                 currentCell.nextcell.previouscell = currentCell;
                 currentCell = currentCell.westcell;
+                Debug.Log(currentCell, currentCell);
                 return;
             }
         }
