@@ -11,15 +11,6 @@ public class PrimsAlgorithmSimplified : MazeAlgorithm
         base.CreateMaze();
         AddAdjacents(adjacentUnvisitedCellsOf(initialCell));
         Generate();
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                maze[i, j].isVisited = false;
-            }
-        }
-
         finalCell = currentCell;
     }
 

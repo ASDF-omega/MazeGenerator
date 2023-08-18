@@ -41,27 +41,13 @@ public abstract class MazeAlgorithm : MonoBehaviour
         currentColumn = Random.Range(0, columns);
         currentCell = maze[currentRow, currentColumn];
         initialCell = currentCell;
+        Debug.Log("StartCell: " + initialCell, initialCell);
         currentCell.isVisited = true;
     }
 
     protected bool hasAdjacentUnvisitedCells()
     {
-        if (currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false)
-        {
-            return true;
-        }
-
-        if (currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false)
-        {
-            return true;
-        }
-
-        if (currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false)
-        {
-            return true;
-        }
-
-        if (currentColumn > 0 && maze[currentRow, currentColumn - 1].isVisited == false)
+        if (currentRow > 0 && maze[currentRow - 1, currentColumn].isVisited == false || currentColumn < columns - 1 && maze[currentRow, currentColumn + 1].isVisited == false || currentRow < rows - 1 && maze[currentRow + 1, currentColumn].isVisited == false || currentColumn > 0 && maze[currentRow, currentColumn - 1].isVisited == false)
         {
             return true;
         }
@@ -70,7 +56,7 @@ public abstract class MazeAlgorithm : MonoBehaviour
     }
 
     protected void visit()
-    {//doesn't work with the hunt and kill algorithm
+    {
         int direction = Random.Range(0, 4);
 
         if (direction == 0)

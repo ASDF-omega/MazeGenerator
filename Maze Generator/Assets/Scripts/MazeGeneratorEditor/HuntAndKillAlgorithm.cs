@@ -9,14 +9,6 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
     {
         base.CreateMaze();
         Kill();
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                maze[i, j].isVisited = false;
-            }
-        }
         finalCell = currentCell;
     }
 
@@ -31,8 +23,8 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                 currentCell = maze[i, j];
                 currentRow = i;
                 currentColumn = j;
-                //the hasAdjacentUnvisitedCells is wrong because currentCell is already set
-                if(adjacentUnvisitedCellsOf(currentCell).Length > 0 && adjacentVisitedCellsOf(currentCell).Length > 0)
+                //the maze is now braided, need to fix bug
+                if(adjacentVisitedCellsOf(currentCell).Length > 0 && !currentCell.isVisited)
                 {
                     #region break the wall between new found cell and a visited cell
                     int random = new int();
@@ -44,14 +36,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     else
                     {
                         random = 0;
-                    }
-                    Debug.Log(currentCell, currentCell);
-                    Debug.Log("adjacentVisitedCellsOf: ");
-
-                    for (int k = 0; k < adjacentVisitedCellsOf(currentCell).Length; k++)
-                    {
-                        Debug.Log( "   -" + adjacentVisitedCellsOf(currentCell)[k], adjacentVisitedCellsOf(currentCell)[k]);
-                    }    
+                    } 
 
                     if(adjacentVisitedCellsOf(currentCell)[random] == currentCell.northcell)
                     {
@@ -71,6 +56,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     }
                     #endregion
                     currentCell.isVisited = true;
+                    Debug.Log("Hunt: " + currentCell, currentCell);
                     isfinished = false;
                     Kill();
                     return;
@@ -78,7 +64,7 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
             }
         }
 
-        if(isfinished)
+        if (isfinished)
         {
             mazeGenerator.mazeParent.GetComponent<MazeParent>().isdoneGenerating = true;
             Debug.Log("<color=lime><B>Successfully generated a maze with \"HuntAndKillAlgorithm\"</B></color>");
