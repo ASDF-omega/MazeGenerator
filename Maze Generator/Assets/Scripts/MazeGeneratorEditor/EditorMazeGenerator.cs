@@ -161,11 +161,16 @@ public class EditorMazeGenerator : Editor
         EditorGUILayout.Space();
         if(GUILayout.Button("Show Solution"))
         {
+            mazeGenerator.pathFinding.rows = mazeGenerator.Rows;
+            mazeGenerator.pathFinding.columns = mazeGenerator.Columns;
             mazeGenerator.pathFinding.FindPath();
+            EditorUtility.DisplayDialog("Success", "Solution found with length: " + mazeGenerator.pathFinding.solutionLength, "ok");
         }
 
         if(GUILayout.Button("Hide Solution"))
         {
+            mazeGenerator.pathFinding.rows = mazeGenerator.Rows;
+            mazeGenerator.pathFinding.columns = mazeGenerator.Columns;
             mazeGenerator.pathFinding.HidePath();
         }
 

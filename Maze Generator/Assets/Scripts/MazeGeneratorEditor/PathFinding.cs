@@ -6,6 +6,7 @@ public class PathFinding : MazeAlgorithm
 {
     public GammaCell StartCell;
     public GammaCell EndCell;
+    public int solutionLength;
 
     private List<GammaCell> Open;//List of cells to be evaluated
     private List<GammaCell> Closed;//List of cells already evaluated
@@ -17,6 +18,8 @@ public class PathFinding : MazeAlgorithm
     #region FindPath
     public void FindPath()
     {
+        solutionLength = 0;
+
         if (StartCell == null)
         {
             StartCell = maze[0, 0];
@@ -50,6 +53,10 @@ public class PathFinding : MazeAlgorithm
                 {
                     maze[i, j].nextcell = null;
                 }
+
+                maze[i, j].GetComponent<GammaCell>().gCost = 0;
+                maze[i, j].GetComponent<GammaCell>().hCost = 0;
+                maze[i, j].GetComponent<GammaCell>().fCost = 0;
             }
         }
 
@@ -88,6 +95,7 @@ public class PathFinding : MazeAlgorithm
             tempMaterial.color = Color.green;
             previousCell.GetComponent<Renderer>().sharedMaterial = tempMaterial;
             previousCell = previousCell.previouscell;
+            ++solutionLength;
         }
     }
 
