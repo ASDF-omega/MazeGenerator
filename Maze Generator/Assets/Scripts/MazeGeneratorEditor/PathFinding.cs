@@ -18,6 +18,8 @@ public class PathFinding : MazeAlgorithm
     #region FindPath
     public void FindPath()
     {
+        HidePath();
+
         solutionLength = 0;
 
         if (StartCell == null)
