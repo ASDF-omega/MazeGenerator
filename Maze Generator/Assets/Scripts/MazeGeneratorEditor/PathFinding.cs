@@ -12,6 +12,7 @@ public class PathFinding : MazeAlgorithm
     private Vector2 startCellPosition;
     private Vector2 endCellPosition;
 
+    //bug: previous of cells are wrong, e.g. when retraced, some are leading to dead ends, sometimes previous cell is null
     public void FindPath()
     {
         if (StartCell == null)
@@ -50,49 +51,49 @@ public class PathFinding : MazeAlgorithm
             }
         }
 
-        int loop = 0;
+        List<GammaCell> correctPath = new List<GammaCell>();
+
         while (currentCell != EndCell)
         {
-            ++loop;
-
-            if (loop > 10000)
-            {
-                Debug.Log(loop);
-                return;
-            }
-
             CalculateCosts();
-            CellToVisit().previouscell = currentCell;
+/*            CellToVisit().previouscell = currentCell;*/
             currentCell = CellToVisit();
+
             Closed.Add(currentCell);
             Open.Remove(currentCell);
 
             for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
             {
-                if (!Open.Contains(adjacentVisitableCellsOf(currentCell)[i]))
+                if (!Open.Contains(adjacentVisitableCellsOf(currentCell)[i]) && !Closed.Contains(adjacentVisitableCellsOf(currentCell)[i]))
                 {
                     Open.Add(adjacentVisitableCellsOf(currentCell)[i]);
+                    adjacentVisitableCellsOf(currentCell)[i].previouscell = currentCell;
                 }
             }
         }
 
         GammaCell previousCell = EndCell.previouscell;
-        List<GammaCell> correctPath = new List<GammaCell>();
+
+        var tempMaterial1 = new Material(StartCell.GetComponent<Renderer>().sharedMaterial);
+        tempMaterial1.color = Color.red;
+        StartCell.GetComponent<Renderer>().sharedMaterial = tempMaterial1;
+        EndCell.GetComponent<Renderer>().sharedMaterial = tempMaterial1;
 
         while (previousCell != StartCell)
         {
             correctPath.Add(previousCell);
-            previousCell.GetComponent<MeshRenderer>().material.color = Color.green;
+            var tempMaterial = new Material(previousCell.GetComponent<Renderer>().sharedMaterial);
+            tempMaterial.color = Color.green;
+            previousCell.GetComponent<Renderer>().sharedMaterial = tempMaterial;
             previousCell = previousCell.previouscell;
         }
     }
 
     private void CalculateCosts()
     {
-        for (int i = 0; i < adjacentVisitableCellsOf(currentCell).Length; i++)
+        for (int i = 0; i < Open.Count; i++)
         {
-            GammaCell cell = adjacentVisitableCellsOf(currentCell)[i];
-
+            GammaCell cell = Open[i];
             if (!Closed.Contains(cell))
             {
                 cell.gCost = WalkingDistanceBetweenCells(startCellPosition, new Vector2(cell.RowIndex, cell.ColumnIndex));

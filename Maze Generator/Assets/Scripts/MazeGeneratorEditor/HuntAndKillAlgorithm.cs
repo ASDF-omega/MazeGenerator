@@ -56,7 +56,6 @@ public class HuntAndKillAlgorithm : MazeAlgorithm
                     }
                     #endregion
                     currentCell.isVisited = true;
-                    Debug.Log("Hunt: " + currentCell, currentCell);
                     isfinished = false;
                     Kill();
                     return;
