@@ -164,6 +164,11 @@ public class EditorMazeGenerator : Editor
             mazeGenerator.pathFinding.FindPath();
         }
 
+        if(GUILayout.Button("Hide Solution"))
+        {
+            mazeGenerator.pathFinding.HidePath();
+        }
+
         #endregion
 
         switch (mazeGenerator.Algorithm)

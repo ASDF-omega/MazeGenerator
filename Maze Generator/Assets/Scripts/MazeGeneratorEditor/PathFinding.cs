@@ -12,7 +12,9 @@ public class PathFinding : MazeAlgorithm
     private Vector2 startCellPosition;
     private Vector2 endCellPosition;
 
-    //bug: previous of cells are wrong, e.g. when retraced, some are leading to dead ends, sometimes previous cell is null
+    [SerializeField] private Material defaultFloorMaterial;
+
+    #region FindPath
     public void FindPath()
     {
         if (StartCell == null)
@@ -176,4 +178,20 @@ public class PathFinding : MazeAlgorithm
 
         return cells_WithLowest_hCost_inCellsWithLowest_fCost.ToArray();
     }
+    #endregion
+
+    #region HidePath
+
+    public void HidePath()
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                maze[i, j].GetComponent<Renderer>().sharedMaterial = defaultFloorMaterial;
+            }
+        }
+    }
+
+    #endregion
 }
